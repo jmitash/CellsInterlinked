@@ -34,3 +34,4 @@
 # IDE and Build Directories
 .idea/
 cmake-build-debug/
+cmake-build-release/
