@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.15)
+
+set(CI_PROJECT_NAME "CellsInterlinkedClient")
+set(CI_CLIENT_VERSION 1.0.0)
+
+
+project(${CI_PROJECT_NAME}
+        VERSION ${CI_CLIENT_VERSION})
+
+set(CMAKE_CXX_STANDARD 20)
+
+
+add_executable(CellsInterlinkedClient src/ClientMain.cpp)
+
+configure_file(src/template/meta/BuildInfo.h.in
+        ${CMAKE_CURRENT_BINARY_DIR}/generated/meta/BuildInfo.h)
+target_include_directories(CellsInterlinkedClient PUBLIC
+        ${CMAKE_CURRENT_BINARY_DIR}/generated/)
