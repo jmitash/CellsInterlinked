@@ -2,6 +2,6 @@
 #include "meta/BuildInfo.h"
 
 int main() {
-    std::cout << "Starting " << PROJECT_NAME << " " << PROJECT_VERSION << " (" << PROJECT_BUILD_TYPE << ")" << std::endl;
+    std::cout << "Starting " << BuildInfo::projectName << " " << BuildInfo::projectVersion << " (" << BuildInfo::buildType << ")" << std::endl;
     return 0;
 }

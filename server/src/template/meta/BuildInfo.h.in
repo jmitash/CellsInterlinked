@@ -5,12 +5,13 @@
 #ifndef CELLSINTERLINKED_BUILDINFO_H
 #define CELLSINTERLINKED_BUILDINFO_H
 
-#define PROJECT_NAME "@CI_PROJECT_NAME@"
-#define PROJECT_VERSION "@PROJECT_VERSION@"
-#define PROJECT_VERSION_MAJOR "@PROJECT_VERSION_MAJOR@"
-#define PROJECT_VERSION_MINOR "@PROJECT_VERSION_MINOR@"
-#define PROJECT_VERSION_PATCH "@PROJECT_VERSION_PATCH@"
-
-#define PROJECT_BUILD_TYPE "@CMAKE_BUILD_TYPE@"
+namespace BuildInfo {
+    constexpr const char * projectName = "@CI_PROJECT_NAME@";
+    constexpr const char * projectVersion = "@PROJECT_VERSION@";
+    constexpr const int projectVersionMajor = @PROJECT_VERSION_MAJOR@;
+    constexpr const int projectVersionMinor = @PROJECT_VERSION_MINOR@;
+    constexpr const int projectVersionPatch = @PROJECT_VERSION_PATCH@;
+    constexpr const char * buildType = "@CMAKE_BUILD_TYPE@";
+}
 
 #endif //CELLSINTERLINKED_BUILDINFO_H
