@@ -10,9 +10,9 @@ project(${CI_PROJECT_NAME}
 set(CMAKE_CXX_STANDARD 20)
 
 
-add_executable(CellsInterlinkedClient src/ClientMain.cpp)
+add_executable(CellsInterlinkedClient ClientMain.cpp)
 
-configure_file(src/template/meta/BuildInfo.h.in
+configure_file(template/meta/BuildInfo.h.in
         ${CMAKE_CURRENT_BINARY_DIR}/generated/meta/BuildInfo.h)
 target_include_directories(CellsInterlinkedClient PUBLIC
         ${CMAKE_CURRENT_BINARY_DIR}/generated/)

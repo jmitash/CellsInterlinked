@@ -9,9 +9,9 @@ project(${CI_PROJECT_NAME}
 set(CMAKE_CXX_STANDARD 20)
 
 
-add_executable(CellsInterlinkedServer src/ServerMain.cpp)
+add_executable(CellsInterlinkedServer ServerMain.cpp)
 
-configure_file(src/template/meta/BuildInfo.h.in
+configure_file(template/meta/BuildInfo.h.in
         ${CMAKE_CURRENT_BINARY_DIR}/generated/meta/BuildInfo.h)
 target_include_directories(CellsInterlinkedServer PUBLIC
         ${CMAKE_CURRENT_BINARY_DIR}/generated/)
