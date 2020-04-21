@@ -8,8 +8,11 @@ project(${CI_PROJECT_NAME}
 
 set(CMAKE_CXX_STANDARD 20)
 
+file(GLOB_RECURSE CI_SERVER_SRCFILES
+        "*.h"
+        "*.cpp")
 
-add_executable(CellsInterlinkedServer ServerMain.cpp)
+add_executable(CellsInterlinkedServer ${CI_SERVER_SRCFILES})
 
 configure_file(template/meta/BuildInfo.h.in
         ${CMAKE_CURRENT_BINARY_DIR}/generated/meta/BuildInfo.h)

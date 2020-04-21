@@ -9,8 +9,11 @@ project(${CI_PROJECT_NAME}
 
 set(CMAKE_CXX_STANDARD 20)
 
+file(GLOB_RECURSE CI_CLIENT_SRCFILES
+        "*.h"
+        "*.cpp")
 
-add_executable(CellsInterlinkedClient ClientMain.cpp)
+add_executable(CellsInterlinkedClient ${CI_CLIENT_SRCFILES})
 
 configure_file(template/meta/BuildInfo.h.in
         ${CMAKE_CURRENT_BINARY_DIR}/generated/meta/BuildInfo.h)
