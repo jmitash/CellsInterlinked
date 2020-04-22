@@ -19,26 +19,26 @@ public:
     Monitor() = default;
 
     /**
-     * Gets the m_name for this monitor. This is usually the OS determined m_name for the device, and is not expected to have any human meaning, e.g. @code \\.\DISPLAY1\Monitor0 @endcode
-     * @return the m_name of this monitor
+     * Gets the name for this monitor. This is usually the OS determined name for the device, and is not expected to have any human meaning, e.g. @code \\.\DISPLAY1\Monitor0 @endcode
+     * @return the name of this monitor
      */
     std::string getName() const;
 
     /**
-     * Sets the m_name for this monitor. See getName().
-     * @param name the m_name to set for this monitor
+     * Sets the name for this monitor. See getName().
+     * @param name the name to set for this monitor
      */
     void setName(const std::string &name);
 
     /**
-     * Gets the context m_name for this monitor. This is usually the driver m_name for the monitor.
-     * @return the context m_name of this monitor
+     * Gets the context name for this monitor. This is usually the driver name for the monitor.
+     * @return the context name of this monitor
      */
     std::string getContextName() const;
 
     /**
-     * Sets the context m_name for this monitor. See getContextName().
-     * @param contextName the context m_name to set for this monitor
+     * Sets the context name for this monitor. See getContextName().
+     * @param contextName the context name to set for this monitor
      */
     void setContextName(const std::string &contextName);
 
