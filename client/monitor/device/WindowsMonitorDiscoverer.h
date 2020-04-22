@@ -15,11 +15,17 @@ public:
     std::vector<Monitor> discoverAll() const override;
 
 private:
-    std::vector<DISPLAY_DEVICE> gatherDisplayDevices() const;
+    std::vector<DISPLAY_DEVICE> gatherDisplayDeviceAdapters() const;
+
+    std::vector<DISPLAY_DEVICE> gatherDisplayDeviceMonitors(const std::vector<DISPLAY_DEVICE> &displayAdapters) const;
 
     std::vector<HMONITOR> gatherHMonitors() const;
 
     static int CALLBACK monitorCallback(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData);
+
+    std::vector<MONITORINFOEX> gatherMonitorInfos(const std::vector<HMONITOR> &hMonitors) const;
+
+    std::vector<Monitor> convertMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
 };
 
 #endif //CELLSINTERLINKED_WINDOWSMONITORDISCOVERER_H

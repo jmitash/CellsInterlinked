@@ -115,6 +115,30 @@ public:
     void setPixelHeight(int pixelHeight);
 
     /**
+     * Gets the left position of the monitor. This is used when there are multiple monitors for a single machine and describes the arrangement of monitors for that machine. This will be relative to the top left of the primary monitor.
+     * @return the position of the left side of the screen in pixels
+     */
+    int getPixelLeft() const;
+
+    /**
+     * Set the left position of the monitor. See getPixelLeft().
+     * @param pixelLeft the position of the left side of the screen in pixels
+     */
+    void setPixelLeft(int pixelLeft);
+
+    /**
+     * Gets the top position of the monitor. This is used when there are multiple monitors for a single machine and describes the arrangement of monitors for that machine. This will be relative to the top left of the primary monitor.
+     * @return the position of the top side of the screen in pixels
+     */
+    int getPixelTop() const;
+
+    /**
+     * Set the top position of the monitor. See getPixelTop().
+     * @param pixelTop the position of the top side of the screen in pixels
+     */
+    void setPixelTop(int pixelTop);
+
+    /**
      * Gets the width in millimeters of this monitor. May not be supported for some monitors.
      * @return the width in millimeters of this monitor, or a non-positive value if not available
      */
@@ -145,10 +169,12 @@ private:
     bool mOn = true;
     bool mReal = true;
     bool mPrimary = true;
-    int mPixelWidth;
-    int mPixelHeight;
-    float mMillimeterWidth;
-    float mMillimeterHeight;
+    int mPixelLeft = 0;
+    int mPixelTop = 0;
+    int mPixelWidth = -1;
+    int mPixelHeight = -1;
+    float mMillimeterWidth = -1;
+    float mMillimeterHeight = -1;
 };
 
 

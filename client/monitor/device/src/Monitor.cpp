@@ -68,6 +68,22 @@ void Monitor::setPixelHeight(int pixelHeight) {
     mPixelHeight = pixelHeight;
 }
 
+int Monitor::getPixelLeft() const {
+    return mPixelLeft;
+}
+
+void Monitor::setPixelLeft(int pixelLeft) {
+    mPixelLeft = pixelLeft;
+}
+
+int Monitor::getPixelTop() const {
+    return mPixelTop;
+}
+
+void Monitor::setPixelTop(int pixelTop) {
+    mPixelTop = pixelTop;
+}
+
 float Monitor::getMillimeterWidth() const {
     return mMillimeterWidth;
 }
@@ -83,5 +99,3 @@ float Monitor::getMillimeterHeight() const {
 void Monitor::setMillimeterHeight(float millimeterHeight) {
     mMillimeterHeight = millimeterHeight;
 }
-
-
