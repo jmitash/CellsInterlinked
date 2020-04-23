@@ -25,7 +25,7 @@ private:
     std::vector<DISPLAY_DEVICE> gatherDisplayDeviceAdapters() const;
 
     /**
-     * Gathers all the display monitors on the system. These will be the display adapters that are tied to a monitor. The display device should contain the monitor name as the @code DISPLAY_DEVICE.DeviceString @endcode, but this may often be something generic such as "Generic PnP Monitor". If there is not a monitor associated with the display adapter, the resulting monitor will have all fields zeroed except for size.
+     * Gathers all the display monitors on the system. These will be the display adapters that are tied to a monitor. The display device should contain the monitor name as the @code DISPLAY_DEVICE.DeviceString @endcode but this may often be something generic such as "Generic PnP Monitor". If there is not a monitor associated with the display adapter, the resulting monitor will have all fields zeroed except for size.
      * @param displayAdapters the display adapters to find associated monitors of
      * @return a vector of display devices representing the monitors associated with the given display adapters
      */

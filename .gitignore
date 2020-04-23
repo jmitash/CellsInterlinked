@@ -38,3 +38,5 @@ cmake-build-release/
 output/
 client/output
 server/output
+client/html
+server/html
