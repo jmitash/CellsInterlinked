@@ -1,11 +1,13 @@
 #include <iostream>
+#include <spdlog/spdlog.h>
 #include "meta/BuildInfo.h"
 
 #include "monitor/device/MonitorDiscovererFactory.h"
 
+using namespace BuildInfo;
+
 int main() {
-    std::cout << "Starting " << BuildInfo::projectName << " " << BuildInfo::projectVersion << " ("
-              << BuildInfo::buildType << ")" << std::endl;
+    spdlog::info("Starting {} {} ({}) ", ::projectName, ::projectVersion, ::buildType);
 
     MonitorDiscovererFactory factory;
     auto monitorDiscoverer = factory.getMonitorDiscoverer();

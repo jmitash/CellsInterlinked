@@ -4,7 +4,6 @@ project(CellsInterlinked
         VERSION 1.0.0)
 
 set(PROJECT_BINARY_DIR "output")
-set(PROJECT_BINARY_DIR "output")
 
 if(${CMAKE_BUILD_TYPE} MATCHES Debug)
     message("Debug build")
