@@ -12,12 +12,12 @@
 
 std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     // TODO: will these be useful? Maybe for finding the EDID?
-    auto displayAdapters = gatherDisplayDeviceAdapters();
-    auto displayMonitors = gatherDisplayDeviceMonitors(displayAdapters);
+//    auto displayAdapters = gatherDisplayDeviceAdapters();
+//    auto displayMonitors = gatherDisplayDeviceMonitors(displayAdapters);
 
-    auto hMonitors = gatherHMonitors();
+    auto hMonitors = gatherMonitorHandles();
     auto monitorInfos = gatherMonitorInfos(hMonitors);
-    auto monitors = convertMonitorInfosToMonitors(monitorInfos);
+    auto monitors = mapMonitorInfosToMonitors(monitorInfos);
 
     return monitors;
 }
@@ -56,7 +56,7 @@ WindowsMonitorDiscoverer::gatherDisplayDeviceMonitors(const std::vector<DISPLAY_
     return displayMonitors;
 }
 
-std::vector<HMONITOR> WindowsMonitorDiscoverer::gatherHMonitors() const {
+std::vector<HMONITOR> WindowsMonitorDiscoverer::gatherMonitorHandles() const {
     std::vector<HMONITOR> hMonitors;
     const auto callback = &WindowsMonitorDiscoverer::monitorCallback;
     const auto callbackParam = reinterpret_cast<LPARAM>(&hMonitors);
@@ -93,7 +93,7 @@ std::vector<MONITORINFOEX> WindowsMonitorDiscoverer::gatherMonitorInfos(const st
 }
 
 std::vector<Monitor>
-WindowsMonitorDiscoverer::convertMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const {
+WindowsMonitorDiscoverer::mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const {
     std::vector<Monitor> monitors;
 
     for (const MONITORINFOEX &monitorInfo : monitorInfos) {

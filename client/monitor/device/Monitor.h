@@ -22,7 +22,7 @@ public:
      * Gets the name for this monitor. This is usually the OS determined name for the device, and is not expected to have any human meaning, e.g. @code \\.\DISPLAY1\Monitor0 @endcode
      * @return the name of this monitor
      */
-    std::string getName() const;
+    [[nodiscard]] std::string getName() const;
 
     /**
      * Sets the name for this monitor. See getName().
@@ -34,7 +34,7 @@ public:
      * Gets the context name for this monitor. This is usually the driver name for the monitor.
      * @return the context name of this monitor
      */
-    std::string getContextName() const;
+    [[nodiscard]] std::string getContextName() const;
 
     /**
      * Sets the context name for this monitor. See getContextName().
@@ -46,7 +46,7 @@ public:
      * Gets the number for this monitor, or -1 if not available. Monitors can be numbered by the operating system. This will be that number if assigned.
      * @return the number for this monitor
      */
-    int getNumber() const;
+    [[nodiscard]] int getNumber() const;
 
     /**
      * Sets the number for this monitor. See getMonitor();
@@ -58,7 +58,7 @@ public:
      * Tells if the monitor is on. Defaults to true if this is not supported by the machine/OS.
      * @return false if the monitor is detected as off, false otherwise
      */
-    bool isOn() const;
+    [[nodiscard]] bool isOn() const;
 
     /**
      * Sets whether this monitor is treated as on or not. See isOn().
@@ -70,7 +70,7 @@ public:
      * Tells whether this monitor is treated as real or not. Some display devices may be considered virtual (not represented by a physical monitor). Defaults to true if this feature is not supported by the machine/OS.
      * @return false if this monitor is virtual, true otherwise
      */
-    bool isReal() const;
+    [[nodiscard]] bool isReal() const;
 
     /**
      * Sets whether this monitor is real or not. See isReal().
@@ -82,7 +82,7 @@ public:
      * Tells if this is the primary monitor for the machine. Most machines/OSs support the concept of a single primary monitor for the user with all other monitors as secondaries.
      * @return true if this is the primary monitor, false otherwise
      */
-    bool isPrimary() const;
+    [[nodiscard]] bool isPrimary() const;
 
     /**
      * Sets whether this monitor is primary or not. See isPrimary().
@@ -94,7 +94,7 @@ public:
      * Tells the width in pixels of this monitor.
      * @return width in pixels of this monitor
      */
-    int getPixelWidth() const;
+    [[nodiscard]] int getPixelWidth() const;
 
     /**
      * Sets the width in pixels of this monitor.
@@ -106,7 +106,7 @@ public:
      * Gets the height in pixels of this monitor.
      * @return the height in pixels of this monitor
      */
-    int getPixelHeight() const;
+    [[nodiscard]] int getPixelHeight() const;
 
     /**
      * Sets the height in pixels of this monitor.
@@ -118,7 +118,7 @@ public:
      * Gets the left position of the monitor. This is used when there are multiple monitors for a single machine and describes the arrangement of monitors for that machine. This will be relative to the top left of the primary monitor.
      * @return the position of the left side of the screen in pixels
      */
-    int getPixelLeft() const;
+    [[nodiscard]] int getPixelLeft() const;
 
     /**
      * Set the left position of the monitor. See getPixelLeft().
@@ -130,7 +130,7 @@ public:
      * Gets the top position of the monitor. This is used when there are multiple monitors for a single machine and describes the arrangement of monitors for that machine. This will be relative to the top left of the primary monitor.
      * @return the position of the top side of the screen in pixels
      */
-    int getPixelTop() const;
+    [[nodiscard]] int getPixelTop() const;
 
     /**
      * Set the top position of the monitor. See getPixelTop().
@@ -142,7 +142,7 @@ public:
      * Gets the width in millimeters of this monitor. May not be supported for some monitors.
      * @return the width in millimeters of this monitor, or a non-positive value if not available
      */
-    float getMillimeterWidth() const;
+    [[nodiscard]] float getMillimeterWidth() const;
 
     /**
      * Sets the width in millimeters of this monitor.
@@ -154,7 +154,7 @@ public:
      * Gets the height in millimeters of this monitor. May not be supported for some monitors.
      * @return the height in millimeters of this monitor, or a non-positive value if not available
      */
-    float getMillimeterHeight() const;
+    [[nodiscard]] float getMillimeterHeight() const;
 
     /**
      * Sets the height in millimeters of this monitor.
