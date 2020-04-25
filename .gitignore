@@ -31,12 +31,19 @@
 *.out
 *.app
 
-# IDE and Build Directories
+# IDE
 .idea/
+
+# Build Directories
 cmake-build-debug/
 cmake-build-release/
-output/
-client/output
-server/output
-client/html
-server/html
+build/debug/
+build/release/
+client/build/debug/
+client/build/release/
+server/build/debug/
+server/build/release/
+
+# Other Generated Files
+client/html/
+server/html/

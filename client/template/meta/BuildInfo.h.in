@@ -6,12 +6,12 @@
 #define CELLSINTERLINKED_BUILDINFO_H
 
 namespace BuildInfo {
-    constexpr const char * projectName = "@CI_PROJECT_NAME@";
-    constexpr const char * projectVersion = "@PROJECT_VERSION@";
-    constexpr const int projectVersionMajor = @PROJECT_VERSION_MAJOR@;
-    constexpr const int projectVersionMinor = @PROJECT_VERSION_MINOR@;
-    constexpr const int projectVersionPatch = @PROJECT_VERSION_PATCH@;
-    constexpr const char * buildType = "@CMAKE_BUILD_TYPE@";
+    constexpr const char *projectName = "CellsInterlinkedClient";
+    constexpr const char *projectVersion = "1.0.0";
+    constexpr const int projectVersionMajor = 1;
+    constexpr const int projectVersionMinor = 0;
+    constexpr const int projectVersionPatch = 0;
+    constexpr const char *buildType = "Debug";
 }
 
 #endif //CELLSINTERLINKED_BUILDINFO_H
