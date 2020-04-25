@@ -34,6 +34,9 @@
 # IDE
 .idea/
 
+# Local files/tools
+local/
+
 # Build Directories
 cmake-build-debug/
 cmake-build-release/
