@@ -12,6 +12,7 @@ namespace BuildInfo {
     constexpr const int projectVersionPatch = @PROJECT_VERSION_PATCH@;
     // @formatter:on
     constexpr const char *buildType = "@CMAKE_BUILD_TYPE@";
+    constexpr const char *baseDirectory = "@CMAKE_CURRENT_SOURCE_DIR@";
 
     constexpr bool stringEquals(const char *string1, const char *string2) {
         int index = 0;
