@@ -6,6 +6,7 @@
 
 #include <windows.h>
 #include "MonitorDiscoverer.h"
+#include "../../../common/logging/LogHelper.h"
 
 /**
  * Monitor discoverer implementation for Windows.
@@ -57,6 +58,10 @@ private:
      * @return a vector of Monitors corresponding to the given monitor infos
      */
     std::vector<Monitor> mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
+
+    std::string serializeDisplayDevice(const DISPLAY_DEVICE &displayDevice) const;
+
+    LOGGER
 };
 
 #endif //CELLSINTERLINKED_WINDOWSMONITORDISCOVERER_H

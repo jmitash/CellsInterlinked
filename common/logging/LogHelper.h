@@ -40,10 +40,16 @@ private:
     std::string getDefaultPattern() const;
 
     /**
-     * Gets the default log level. This is driven by the environment and build type.
-     * @return the default log level
+     * Gets the default STDOUT log level. This is driven by the environment and build type.
+     * @return the default STDOUT log level
      */
-    spdlog::level::level_enum getDefaultLogLevel() const;
+    spdlog::level::level_enum getDefaultStdoutLogLevel() const;
+
+    /**
+     * Gets the default file log level. This is driven by the environment and build type.
+     * @return the default file log level
+     */
+    spdlog::level::level_enum getDefaultFileLogLevel() const;
 
     /**
      * Gets a logger friendly name to use from the file name.
@@ -62,5 +68,6 @@ private:
     std::vector<std::shared_ptr<spdlog::sinks::sink>> sinks;
 };
 
+#define LOGGER inline static auto logger = LogHelper::logger(__FILE__);
 
 #endif //CELLSINTERLINKED_LOGHELPER_H

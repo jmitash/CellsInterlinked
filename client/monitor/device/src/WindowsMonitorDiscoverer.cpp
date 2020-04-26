@@ -1,16 +1,14 @@
 
 #ifdef _WIN32
 
-#include <iostream>
-#include <system_error>
 #include <dshow.h>
 
 #include "../WindowsMonitorDiscoverer.h"
 
 std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     // TODO: will these be useful? Maybe for finding the EDID?
-//    auto displayAdapters = gatherDisplayDeviceAdapters();
-//    auto displayMonitors = gatherDisplayDeviceMonitors(displayAdapters);
+    auto displayAdapters = gatherDisplayDeviceAdapters();
+    auto displayMonitors = gatherDisplayDeviceMonitors(displayAdapters);
 
     auto hMonitors = gatherMonitorHandles();
     auto monitorInfos = gatherMonitorInfos(hMonitors);
@@ -27,6 +25,9 @@ std::vector<DISPLAY_DEVICE> WindowsMonitorDiscoverer::gatherDisplayDeviceAdapter
     displayAdapter.cb = sizeof(displayAdapter);
 
     while (EnumDisplayDevicesA(nullptr, deviceIndex++, &displayAdapter, 0)) {
+        if (logger.should_log(spdlog::level::trace)) {
+            logger.trace("Discovered display adapter: {}", serializeDisplayDevice(displayAdapter));
+        }
         displayAdapters.push_back(displayAdapter);
     }
 
@@ -44,9 +45,15 @@ WindowsMonitorDiscoverer::gatherDisplayDeviceMonitors(const std::vector<DISPLAY_
         displayMonitor.cb = sizeof(displayMonitor);
 
         if (!EnumDisplayDevicesA(displayAdapter.DeviceName, 0, &displayMonitor, 0)) {
-            // TODO: handle error
+            if (logger.should_log(spdlog::level::trace)) {
+                logger.trace("Display adapter did not convert to monitor: {}", serializeDisplayDevice(displayAdapter));
+            }
+            continue;
         }
 
+        if (logger.should_log(spdlog::level::trace)) {
+            logger.trace("Discovered display monitor from adapter: {}", serializeDisplayDevice(displayMonitor));
+        }
         displayMonitors.push_back(displayMonitor);
     }
 
@@ -59,7 +66,7 @@ std::vector<HMONITOR> WindowsMonitorDiscoverer::gatherMonitorHandles() const {
     const auto callbackParam = reinterpret_cast<LPARAM>(&hMonitors);
 
     if (!EnumDisplayMonitors(nullptr, nullptr, callback, callbackParam)) {
-        throw std::system_error(-1, std::generic_category());
+        logger.error("Error occurred while gathering monitor handles: {}", GetLastError());
     }
 
     return hMonitors;
@@ -80,7 +87,7 @@ std::vector<MONITORINFOEX> WindowsMonitorDiscoverer::gatherMonitorInfos(const st
         monitorInfo.cbSize = sizeof(monitorInfo);
 
         if (!GetMonitorInfoA(hMonitor, &monitorInfo)) {
-            // TODO: handle error
+            logger.error("Error occurred while gathering monitor infos: {}", GetLastError());
         }
 
         monitorInfos.push_back(monitorInfo);
@@ -113,6 +120,15 @@ WindowsMonitorDiscoverer::mapMonitorInfosToMonitors(const std::vector<MONITORINF
     }
 
     return monitors;
+}
+
+std::string WindowsMonitorDiscoverer::serializeDisplayDevice(const DISPLAY_DEVICE &displayDevice) const {
+    return fmt::format(R"(Name="{}", String="{}", Flags="{}", ID="{}", Key="{}")",
+                       displayDevice.DeviceName,
+                       displayDevice.DeviceString,
+                       displayDevice.StateFlags,
+                       displayDevice.DeviceID,
+                       displayDevice.DeviceKey);
 }
 
 #endif
