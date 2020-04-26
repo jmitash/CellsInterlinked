@@ -15,7 +15,7 @@ conan_cmake_run(
 conan_target_link_libraries(${CI_PROJECT_NAME} PUBLIC ${CONAN_LIBS})
 
 # Discover and include source files
-file(GLOB_RECURSE CI_PROJECT_SRCFILES CONFIGURE_DEPENDS "*.h" "*.cpp")
+file(GLOB_RECURSE CI_PROJECT_SRCFILES CONFIGURE_DEPENDS "*.h" "*.cpp" "../common/**/*.h" "../common/**/*.cpp")
 target_sources(${CI_PROJECT_NAME} PRIVATE ${CI_PROJECT_SRCFILES})
 
 # Discover, configure, and include template files
