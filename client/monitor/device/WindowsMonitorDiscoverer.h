@@ -1,6 +1,3 @@
-//
-// Created by jacob on 4/20/2020.
-//
 
 #ifdef _WIN32
 

@@ -1,6 +1,3 @@
-//
-// Created by jacob on 4/21/2020.
-//
 
 #include "../MonitorDiscovererFactory.h"
 #include "../WindowsMonitorDiscoverer.h"

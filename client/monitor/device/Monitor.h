@@ -1,6 +1,3 @@
-//
-// Created by jacob on 4/19/2020.
-//
 
 #ifndef CELLSINTERLINKED_MONITOR_H
 #define CELLSINTERLINKED_MONITOR_H
