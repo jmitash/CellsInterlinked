@@ -26,7 +26,7 @@ std::vector<DISPLAY_DEVICE> WindowsMonitorDiscoverer::gatherDisplayDeviceAdapter
 
     while (EnumDisplayDevicesA(nullptr, deviceIndex++, &displayAdapter, 0)) {
         if (logger.should_log(spdlog::level::trace)) {
-            logger.trace("Discovered display adapter: {}", serializeDisplayDevice(displayAdapter));
+            logger.trace("Discovered display adapter: {}", toString(displayAdapter));
         }
         displayAdapters.push_back(displayAdapter);
     }
@@ -46,13 +46,13 @@ WindowsMonitorDiscoverer::gatherDisplayDeviceMonitors(const std::vector<DISPLAY_
 
         if (!EnumDisplayDevicesA(displayAdapter.DeviceName, 0, &displayMonitor, 0)) {
             if (logger.should_log(spdlog::level::trace)) {
-                logger.trace("Display adapter did not convert to monitor: {}", serializeDisplayDevice(displayAdapter));
+                logger.trace("Display adapter did not convert to monitor: {}", toString(displayAdapter));
             }
             continue;
         }
 
         if (logger.should_log(spdlog::level::trace)) {
-            logger.trace("Discovered display monitor from adapter: {}", serializeDisplayDevice(displayMonitor));
+            logger.trace("Discovered display monitor from adapter: {}", toString(displayMonitor));
         }
         displayMonitors.push_back(displayMonitor);
     }
@@ -122,7 +122,7 @@ WindowsMonitorDiscoverer::mapMonitorInfosToMonitors(const std::vector<MONITORINF
     return monitors;
 }
 
-std::string WindowsMonitorDiscoverer::serializeDisplayDevice(const DISPLAY_DEVICE &displayDevice) const {
+std::string WindowsMonitorDiscoverer::toString(const DISPLAY_DEVICE &displayDevice) const {
     return fmt::format(R"(Name="{}", String="{}", Flags="{}", ID="{}", Key="{}")",
                        displayDevice.DeviceName,
                        displayDevice.DeviceString,

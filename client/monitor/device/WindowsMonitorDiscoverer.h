@@ -59,7 +59,12 @@ private:
      */
     std::vector<Monitor> mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
 
-    std::string serializeDisplayDevice(const DISPLAY_DEVICE &displayDevice) const;
+    /**
+     * Converts a display device to a human readable string.
+     * @param displayDevice the display device to convert
+     * @return string form of the display device
+     */
+    std::string toString(const DISPLAY_DEVICE &displayDevice) const;
 
     inline static auto logger = LogHelper::logger(__FILE__);
 };
