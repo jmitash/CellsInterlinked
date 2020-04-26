@@ -68,6 +68,4 @@ private:
     std::vector<std::shared_ptr<spdlog::sinks::sink>> sinks;
 };
 
-#define LOGGER inline static auto logger = LogHelper::logger(__FILE__);
-
 #endif //CELLSINTERLINKED_LOGHELPER_H

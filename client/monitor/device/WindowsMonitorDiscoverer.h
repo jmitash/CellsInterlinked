@@ -61,7 +61,7 @@ private:
 
     std::string serializeDisplayDevice(const DISPLAY_DEVICE &displayDevice) const;
 
-    LOGGER
+    inline static auto logger = LogHelper::logger(__FILE__);
 };
 
 #endif //CELLSINTERLINKED_WINDOWSMONITORDISCOVERER_H
