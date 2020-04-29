@@ -3,6 +3,10 @@
 #include "meta/BuildInfo.h"
 #include "monitor/device/MonitorDiscovererFactory.h"
 
+#include <memory>
+#include "message/TestEvent.h"
+#include "message/TestSubscriber.h"
+
 int main() {
     spdlog::logger logger = LogHelper::logger(__FILE__);
     logger.info("Starting {} {} ({})", BuildInfo::projectName, BuildInfo::projectVersion, BuildInfo::buildType);
@@ -11,6 +15,13 @@ int main() {
     auto monitorDiscoverer = factory.getMonitorDiscoverer();
 
     monitorDiscoverer->discoverAll();
+
+    auto event = std::make_shared<TestEvent>("", "");
+    std::shared_ptr<Subscriber<Event>> testSubscriber = std::reinterpret_pointer_cast<Subscriber<Event>>(
+            std::make_shared<TestSubscriber>());
+
+    testSubscriber->supports(event);
+    testSubscriber->handle(event);
 
     return 0;
 }
