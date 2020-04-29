@@ -23,7 +23,7 @@ std::string Event::toString() {
 }
 
 std::map<std::string, std::string> Event::getFieldMap() const {
-    std::map<std::string, std::string> fields;
+    std::map<std::string, std::string> fields; // TODO: order-preserving map implementation
     const std::string formattedCreationTime = date::format("%FT%TZ", getCreationTime());
 
     fields.insert(std::make_pair("sourceName", getSourceName()));
