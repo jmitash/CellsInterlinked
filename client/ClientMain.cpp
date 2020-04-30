@@ -6,6 +6,8 @@
 #include <memory>
 #include "message/TestEvent.h"
 #include "message/TestSubscriber.h"
+#include "message/SubscriberQueue.h"
+#include "message/Broker.h"
 
 int main() {
     spdlog::logger logger = LogHelper::logger(__FILE__);
@@ -20,8 +22,9 @@ int main() {
     std::shared_ptr<Subscriber<Event>> testSubscriber = std::reinterpret_pointer_cast<Subscriber<Event>>(
             std::make_shared<TestSubscriber>());
 
-    testSubscriber->supports(event);
-    testSubscriber->handle(event);
+    Broker broker = Broker::get();
+    broker.subscribe(testSubscriber);
+    broker.publish(event);
 
     return 0;
 }

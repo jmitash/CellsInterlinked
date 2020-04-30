@@ -3,6 +3,7 @@
 #define CELLSINTERLINKED_SUBSCRIBER_H
 
 #include <memory>
+#include <string>
 
 /**
  * An interface for message subscribers. Subscribers can be registered to receive an Event.
@@ -11,6 +12,12 @@
 template<typename E>
 class Subscriber {
 public:
+    /**
+     * Gets the name of this subscriber. This should be unique.
+     * @return the name of this subscriber
+     */
+    virtual std::string getName() = 0;
+
     /**
      * Tells if this subscriber supports the given event.
      * @param event a pointer to the event to test the support of

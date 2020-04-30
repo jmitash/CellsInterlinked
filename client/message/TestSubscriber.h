@@ -8,6 +8,8 @@
 
 class TestSubscriber : public Subscriber<TestEvent> {
 public:
+    std::string getName() override;
+
     bool supports(std::shared_ptr<TestEvent> event) override;
 
     void handle(std::shared_ptr<TestEvent> event) override;

@@ -11,6 +11,10 @@ std::string Event::getEventName() const {
     return std::string();
 }
 
+int Event::getPriority() const {
+    return mPriority;
+}
+
 std::chrono::system_clock::time_point Event::getCreationTime() const {
     return mCreationTime;
 }
@@ -28,6 +32,7 @@ std::map<std::string, std::string> Event::getFieldMap() const {
 
     fields.insert(std::make_pair("sourceName", getSourceName()));
     fields.insert(std::make_pair("eventName", getEventName()));
+    fields.insert(std::make_pair("priority", std::to_string(getPriority())));
     fields.insert(std::make_pair("creationTime", formattedCreationTime));
 
     return fields;
