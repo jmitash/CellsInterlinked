@@ -8,11 +8,11 @@
 
 class TestSubscriber : public Subscriber<TestEvent> {
 public:
+    TestSubscriber() : Subscriber("TestSubscriber") {}
+
     std::string getName() override;
 
     bool supports(std::shared_ptr<TestEvent> event) override;
-
-    void handle(std::shared_ptr<TestEvent> event) override;
 
 private:
     spdlog::logger logger = LogHelper::logger(__FILE__);

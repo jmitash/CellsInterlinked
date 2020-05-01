@@ -6,30 +6,34 @@
 #include <string>
 
 /**
- * An interface for message subscribers. Subscribers can be registered to receive an Event.
- * @tparam E the event type that this subscriber subscribes to
+ * An interface for message subscribers. Subscribers can be enrolled with the Broker to receive an event queue.
+ * @tparam E the event type that this subscriber will handle
  */
 template<typename E>
 class Subscriber {
 public:
     /**
+     * Creates a subscriber with the given name.
+     */
+    Subscriber(const std::string &name) : mName(name) {};
+
+    /**
      * Gets the name of this subscriber. This should be unique.
      * @return the name of this subscriber
      */
-    virtual std::string getName() = 0;
+    [[nodiscard]] virtual std::string getName() {
+        return mName;
+    }
 
     /**
      * Tells if this subscriber supports the given event.
      * @param event a pointer to the event to test the support of
      * @return true if this subscriber supports handling the given event, false otherwise
      */
-    virtual bool supports(std::shared_ptr<E> event) = 0;
+    [[nodiscard]] virtual bool supports(std::shared_ptr<E> event) = 0;
 
-    /**
-     * Handles the given event.
-     * @param event the event to handle
-     */
-    virtual void handle(std::shared_ptr<E> event) = 0;
+private:
+    const std::string mName;
 };
 
 

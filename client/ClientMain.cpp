@@ -22,9 +22,12 @@ int main() {
     std::shared_ptr<Subscriber<Event>> testSubscriber = std::reinterpret_pointer_cast<Subscriber<Event>>(
             std::make_shared<TestSubscriber>());
 
-    Broker broker = Broker::get();
-    broker.subscribe(testSubscriber);
-    broker.publish(event);
+    Broker *broker = Broker::get();
+    auto pollableQueue = broker->enroll(testSubscriber);
+    broker->publish(event);
+    auto receivedEvent = pollableQueue->popEvent(false);
+
+    Broker *broker1 = Broker::get();
 
     return 0;
 }
