@@ -7,6 +7,9 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/sink.h>
 
+/**
+ * A singleton user to help in the creation of a spdlog::logger for each class that requires one.
+ */
 class LogHelper {
 public:
     /**

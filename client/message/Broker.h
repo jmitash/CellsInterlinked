@@ -6,6 +6,9 @@
 
 #include "SubscriberQueue.h"
 
+/**
+ * A singleton message broker for the application. This is the main interface for publishing events and event queue management.
+ */
 class Broker {
 public:
 
