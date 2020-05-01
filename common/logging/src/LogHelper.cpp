@@ -22,12 +22,12 @@ LogHelper::LogHelper() {
 }
 
 spdlog::logger LogHelper::logger(const std::string &file) {
-    return get().createLogger(file);
+    return get()->createLogger(file);
 }
 
-LogHelper &LogHelper::get() {
+LogHelper *LogHelper::get() {
     static LogHelper instance;
-    return instance;
+    return &instance;
 }
 
 spdlog::logger LogHelper::createLogger(const std::string &file) {

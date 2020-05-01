@@ -13,7 +13,7 @@ public:
      * Gets a singleton log helper instance. Creates the instance if not already created.
      * @return the singleton log helper instance
      */
-    static LogHelper &get();
+    static LogHelper *get();
 
     /**
      * Creates a logger for the given file name using the default configuration.
