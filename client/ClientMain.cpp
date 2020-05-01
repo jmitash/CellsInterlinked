@@ -18,7 +18,7 @@ int main() {
 
     monitorDiscoverer->discoverAll();
 
-    auto event = std::make_shared<TestEvent>("", "");
+    auto event = std::make_shared<TestEvent>();
     std::shared_ptr<Subscriber<Event>> testSubscriber = std::reinterpret_pointer_cast<Subscriber<Event>>(
             std::make_shared<TestSubscriber>());
 

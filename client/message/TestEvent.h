@@ -6,7 +6,7 @@
 
 class TestEvent : public Event {
 public:
-    TestEvent(const std::string &sourceName, const std::string &eventName);
+    TestEvent() : Event("TestEvent") {};
 };
 
 
