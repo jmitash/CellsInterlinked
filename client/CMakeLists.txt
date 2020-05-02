@@ -16,10 +16,10 @@ endif ()
 project(CellsInterlinkedClient
         VERSION 1.0.0
         DESCRIPTION "The Cells Interlinked Client")
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CI_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 ###############################################
 ################### Options ###################
@@ -35,10 +35,6 @@ if (${RUN_TESTS} AND ${SKIP_BUILD_TESTS})
     message(FATAL_ERROR "Cannot specify SKIP_BUILD_TESTS and RUN_TESTS at the same time.")
 endif ()
 ################# End Options #################
-
-file(GLOB_RECURSE CI_SRC_FILES_NO_MAIN CONFIGURE_DEPENDS "src/*/*.h" "src/*/*.cpp")
-set(CI_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(CI_PROJECT_LIB_NAME "${PROJECT_NAME}Sources")
 
 ###############################################
 ############### Configure files ###############
@@ -90,6 +86,9 @@ endif ()
 ###############################################
 ############ Library Configuration ############
 ###############################################
+file(GLOB_RECURSE CI_SRC_FILES_NO_MAIN CONFIGURE_DEPENDS "src/*/*.h" "src/*/*.cpp")
+set(CI_PROJECT_LIB_NAME "${PROJECT_NAME}Sources")
+
 add_library(${CI_PROJECT_LIB_NAME} ${CI_SRC_FILES_NO_MAIN})
 target_include_directories(${CI_PROJECT_LIB_NAME} PUBLIC ${CI_INCLUDE_DIR} ${CI_GENERATED_INCLUDE_DIR})
 target_link_libraries(${CI_PROJECT_LIB_NAME} ${CONAN_LIBS})

@@ -24,7 +24,8 @@ else ()
 endif ()
 ########### End Conan Setup and Run ###########
 
-add_executable(${PROJECT_NAME} "ClientMainTest.cpp")
+file(GLOB_RECURSE CI_TEST_FILES CONFIGURE_DEPENDS "*.h" "*.cpp")
+add_executable(${PROJECT_NAME} ${CI_TEST_FILES})
 target_link_libraries(${PROJECT_NAME} ${CI_PROJECT_LIB_NAME} ${CONAN_LIBS})
 
 if (${RUN_TESTS})
