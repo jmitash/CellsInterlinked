@@ -3,8 +3,7 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 
-
-//#include "meta/BuildInfo.h"
+#include "meta/BuildInfo.h"
 #include "logging/LogHelper.h"
 
 LogHelper::LogHelper() {
@@ -49,9 +48,9 @@ std::string LogHelper::getDefaultPattern() const {
 }
 
 spdlog::level::level_enum LogHelper::getDefaultStdoutLogLevel() const {
-//    if (BuildInfo::isDebug()) {
-//        return spdlog::level::debug;
-//    }
+    if (BuildInfo::isDebug()) {
+        return spdlog::level::debug;
+    }
 
     return spdlog::level::info;
 }

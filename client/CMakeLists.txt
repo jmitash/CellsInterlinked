@@ -18,6 +18,26 @@ file(GLOB_RECURSE CI_SRC_FILES_NO_MAIN CONFIGURE_DEPENDS "src/*/*.h" "src/*/*.cp
 set(CI_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(CI_PROJECT_LIB_NAME "${PROJECT_NAME}Sources")
 
+###############################################
+############### Configure files ###############
+###############################################
+# This is where we handle template files
+file(GLOB_RECURSE CI_TEMPLATE_SRCFILES
+        RELATIVE ${CI_INCLUDE_DIR}
+        CONFIGURE_DEPENDS "*.in")
+foreach (CI_TEMPLATE_SRCFILE IN ITEMS ${CI_TEMPLATE_SRCFILES})
+    # Remove .in
+    string(REGEX REPLACE "\\.in$" "" CI_TEMPLATE_DESTFILE ${CI_TEMPLATE_SRCFILE})
+    # Put in generated/ subdirectory
+    set(CI_TEMPLATE_DESTFILE "generated/${CI_TEMPLATE_DESTFILE}")
+    message(VERBOSE "Template file will be configured: ${CI_TEMPLATE_SRCFILE} --- ${CI_TEMPLATE_DESTFILE}")
+    configure_file("${CI_INCLUDE_DIR}/${CI_TEMPLATE_SRCFILE}" ${CI_TEMPLATE_DESTFILE})
+endforeach ()
+set(CI_GENERATED_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+if (NOT EXISTS ${CI_GENERATED_INCLUDE_DIR})
+    set(CI_GENERATED_INCLUDE_DIR "")
+endif ()
+############# End Configure files #############
 
 ###############################################
 ############# Conan Setup and Run #############
@@ -46,7 +66,7 @@ endif ()
 
 
 add_library(${CI_PROJECT_LIB_NAME} ${CI_SRC_FILES_NO_MAIN})
-target_include_directories(${CI_PROJECT_LIB_NAME} PUBLIC ${CI_INCLUDE_DIR})
+target_include_directories(${CI_PROJECT_LIB_NAME} PUBLIC ${CI_INCLUDE_DIR} ${CI_GENERATED_INCLUDE_DIR})
 target_link_libraries(${CI_PROJECT_LIB_NAME} ${CONAN_LIBS})
 
 add_subdirectory(src)

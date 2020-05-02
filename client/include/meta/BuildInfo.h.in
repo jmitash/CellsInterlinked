@@ -4,7 +4,7 @@
 
 namespace BuildInfo {
 
-    constexpr const char *projectName = "@CI_PROJECT_NAME@";
+    constexpr const char *projectName = "@PROJECT_NAME@";
     constexpr const char *projectVersion = "@PROJECT_VERSION@";
     // @formatter:off
     constexpr const int projectVersionMajor = @PROJECT_VERSION_MAJOR@;
