@@ -4,7 +4,7 @@
 
 #include "Subscriber.h"
 #include "TestEvent.h"
-#include "../../common/logging/LogHelper.h"
+#include "logging/LogHelper.h"
 
 class TestSubscriber : public Subscriber<TestEvent> {
 public:

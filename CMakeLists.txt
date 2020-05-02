@@ -1,25 +1,13 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.17)
 
-project(CellsInterlinked)
-
-# Resolve the binary directories for subdirectories based off of the build type
-if (${CMAKE_BUILD_TYPE} MATCHES "Debug" OR ${PROJECT_BINARY_DIR} MATCHES "debug/?$")
-    message(STATUS "Debug build type")
-    set(CI_CLIENT_BUILD_DIR "${PROJECT_SOURCE_DIR}/client/build/debug")
-    set(CI_SERVER_BUILD_DIR "${PROJECT_SOURCE_DIR}/server/build/debug")
-elseif (${CMAKE_BUILD_TYPE} MATCHES "Release" OR ${PROJECT_BINARY_DIR} MATCHES "release/?$")
-    message(STATUS "Release build type")
-    set(CI_CLIENT_BUILD_DIR "${PROJECT_SOURCE_DIR}/client/build/release")
-    set(CI_SERVER_BUILD_DIR "${PROJECT_SOURCE_DIR}/server/build/release")
-else ()
-    message(FATAL_ERROR "Unknown build type. Build type is required to be \"Debug\" or \"Release\".")
+# Verify the user isn't building in the source directory
+if (${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
+    message(FATAL_ERROR "Building within the source directory is disallowed to prevent accidental corruption of the \
+source directory. Please specify a build directory in a different location.")
 endif ()
 
-set(CI_CLIENT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/client")
-set(CI_SERVER_SOURCE_DIR "${PROJECT_SOURCE_DIR}/server")
+project(CellsInterlinked
+        DESCRIPTION "Cross-machine mouse and keyboard control")
 
-message(VERBOSE "Adding client source subdirectory ${CI_CLIENT_SOURCE_DIR} with build directory ${CI_CLIENT_BUILD_DIR}")
-message(VERBOSE "Adding server source subdirectory ${CI_SERVER_SOURCE_DIR} with build directory ${CI_SERVER_BUILD_DIR}")
-
-add_subdirectory(${CI_CLIENT_SOURCE_DIR} ${CI_CLIENT_BUILD_DIR})
-add_subdirectory(${CI_SERVER_SOURCE_DIR} ${CI_SERVER_BUILD_DIR})
+add_subdirectory(client)
+#add_subdirectory(server)

@@ -4,8 +4,8 @@
 #include <spdlog/sinks/rotating_file_sink.h>
 
 
-#include "meta/BuildInfo.h"
-#include "../LogHelper.h"
+//#include "meta/BuildInfo.h"
+#include "logging/LogHelper.h"
 
 LogHelper::LogHelper() {
     auto stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -49,9 +49,9 @@ std::string LogHelper::getDefaultPattern() const {
 }
 
 spdlog::level::level_enum LogHelper::getDefaultStdoutLogLevel() const {
-    if (BuildInfo::isDebug()) {
-        return spdlog::level::debug;
-    }
+//    if (BuildInfo::isDebug()) {
+//        return spdlog::level::debug;
+//    }
 
     return spdlog::level::info;
 }
@@ -62,7 +62,7 @@ spdlog::level::level_enum LogHelper::getDefaultFileLogLevel() const {
 
 std::string LogHelper::getLoggerName(const std::string &fileName) const {
     auto forwardSlashFileName = convertToForwardSlash(fileName);
-    auto forwardSlashBaseDirectory = convertToForwardSlash(BuildInfo::baseDirectory);
+    auto forwardSlashBaseDirectory = std::string("");//convertToForwardSlash(BuildInfo::baseDirectory);
     if (forwardSlashBaseDirectory.find_last_of('/') < forwardSlashBaseDirectory.size() - 1) {
         forwardSlashBaseDirectory += '/';
     }

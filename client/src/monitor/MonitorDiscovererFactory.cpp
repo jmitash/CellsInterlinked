@@ -1,6 +1,6 @@
 
-#include "../MonitorDiscovererFactory.h"
-#include "../WindowsMonitorDiscoverer.h"
+#include "monitor/MonitorDiscovererFactory.h"
+#include "monitor/WindowsMonitorDiscoverer.h"
 
 std::unique_ptr<MonitorDiscoverer> MonitorDiscovererFactory::getMonitorDiscoverer() const {
 #ifdef _WIN32

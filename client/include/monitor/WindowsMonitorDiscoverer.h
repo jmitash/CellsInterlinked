@@ -6,7 +6,7 @@
 
 #include <windows.h>
 #include "MonitorDiscoverer.h"
-#include "../../../common/logging/LogHelper.h"
+#include "logging/LogHelper.h"
 
 /**
  * Monitor discoverer implementation for Windows.

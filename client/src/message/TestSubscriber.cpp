@@ -1,5 +1,5 @@
 
-#include "../TestSubscriber.h"
+#include "../../include/message/TestSubscriber.h"
 
 
 std::string TestSubscriber::getName() {
