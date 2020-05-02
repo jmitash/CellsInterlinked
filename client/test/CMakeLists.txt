@@ -14,7 +14,7 @@ set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY COMPILE_OPTIONS ${CI
 # End temporary fix
 
 set(CI_INHERITED_CONAN_LIBS ${CONAN_LIBS})
-if (CI_CONAN_MANUAL)
+if (CONAN_MANUAL)
     conan_basic_setup()
 else ()
     conan_cmake_run(
@@ -24,7 +24,16 @@ else ()
 endif ()
 ########### End Conan Setup and Run ###########
 
-enable_testing()
-
 add_executable(${PROJECT_NAME} "ClientMainTest.cpp")
 target_link_libraries(${PROJECT_NAME} ${CI_PROJECT_LIB_NAME} ${CONAN_LIBS})
+
+if (${RUN_TESTS})
+    message(STATUS "Will run tests.")
+    add_custom_command(
+            TARGET ${PROJECT_NAME}
+            COMMENT "Running tests for ${PROJECT_NAME}"
+            POST_BUILD
+            COMMAND ${PROJECT_NAME})
+else ()
+    message(STATUS "Not running tests.")
+endif ()

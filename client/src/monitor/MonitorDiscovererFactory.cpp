@@ -1,11 +1,14 @@
 
 #include "monitor/MonitorDiscovererFactory.h"
 #include "monitor/WindowsMonitorDiscoverer.h"
+#include "meta/BuildInfo.h"
 
 std::unique_ptr<MonitorDiscoverer> MonitorDiscovererFactory::getMonitorDiscoverer() const {
-#ifdef _WIN32
-    return std::unique_ptr<MonitorDiscoverer>{new WindowsMonitorDiscoverer{}};
-#else
-#error "Unsupported Operating System. Currently, only Windows is supported."
-#endif
+    BuildInfo::assertSupportedPlatform();
+
+    if constexpr (BuildInfo::isWindows()) {
+        return std::make_unique<WindowsMonitorDiscoverer>();
+    } else {
+        return std::unique_ptr<MonitorDiscoverer>(nullptr);
+    }
 }

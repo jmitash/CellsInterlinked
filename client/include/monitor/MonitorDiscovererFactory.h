@@ -15,7 +15,7 @@ public:
      * Creates a monitor discoverer supported by the current operating system and returns a pointer to it.
      * @return a pointer to a new monitor discoverer instance
      */
-    std::unique_ptr<MonitorDiscoverer> getMonitorDiscoverer() const;
+    [[nodiscard]] std::unique_ptr<MonitorDiscoverer> getMonitorDiscoverer() const;
 };
 
 

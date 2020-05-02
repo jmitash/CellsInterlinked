@@ -14,6 +14,18 @@ namespace BuildInfo {
     constexpr const char *buildType = "@CMAKE_BUILD_TYPE@";
     constexpr const char *baseDirectory = "@CMAKE_CURRENT_SOURCE_DIR@";
 
+    constexpr bool stringEquals(const char *string1, const char *string2);
+
+    constexpr bool isPlatformSupported();
+
+    constexpr bool isWindows();
+
+    constexpr bool isIgnoreUnsupportedPlatform();
+
+    constexpr void assertSupportedPlatform();
+
+    constexpr bool isDebug();
+
     constexpr bool stringEquals(const char *string1, const char *string2) {
         int index = 0;
 
@@ -34,6 +46,28 @@ namespace BuildInfo {
 
             index++;
         }
+    }
+
+    constexpr bool isPlatformSupported() {
+        return isWindows();
+    }
+
+    constexpr bool isWindows() {
+#ifdef _WIN32
+        return true;
+#else
+        return false;
+#endif
+    }
+
+    constexpr bool isIgnoreUnsupportedPlatform() {
+        return stringEquals("@IGNORE_UNSUPPORTED_PLATFORM@", "ON");
+    }
+
+    constexpr void assertSupportedPlatform() {
+        static_assert(isPlatformSupported() || isIgnoreUnsupportedPlatform(),
+                      "The current platform is not supported. You can ignore this with the CMake option "
+                      "\"IGNORE_UNSUPPORTED_PLATFORM\".");
     }
 
     constexpr bool isDebug() {
