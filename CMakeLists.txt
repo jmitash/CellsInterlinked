@@ -10,4 +10,4 @@ project(CellsInterlinked
         DESCRIPTION "Cross-machine mouse and keyboard control")
 
 add_subdirectory(client)
-#add_subdirectory(server)
+add_subdirectory(server)

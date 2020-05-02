@@ -16,6 +16,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 file(GLOB_RECURSE CI_SRC_FILES_NO_MAIN CONFIGURE_DEPENDS "src/*/*.h" "src/*/*.cpp")
 set(CI_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(CI_PROJECT_LIB_NAME "${PROJECT_NAME}Sources")
 
 
 ###############################################
@@ -42,6 +43,11 @@ else ()
             BUILD missing)
 endif ()
 ########### End Conan Setup and Run ###########
+
+
+add_library(${CI_PROJECT_LIB_NAME} ${CI_SRC_FILES_NO_MAIN})
+target_include_directories(${CI_PROJECT_LIB_NAME} PUBLIC ${CI_INCLUDE_DIR})
+target_link_libraries(${CI_PROJECT_LIB_NAME} ${CONAN_LIBS})
 
 add_subdirectory(src)
 add_subdirectory(test)

@@ -26,6 +26,5 @@ endif ()
 
 enable_testing()
 
-add_executable(${PROJECT_NAME} "ClientMainTest.cpp" ${CI_SRC_FILES_NO_MAIN}) #TODO: test main
-target_include_directories(${PROJECT_NAME} PRIVATE ${CI_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${CI_INHERITED_CONAN_LIBS} ${CONAN_LIBS})
+add_executable(${PROJECT_NAME} "ClientMainTest.cpp")
+target_link_libraries(${PROJECT_NAME} ${CI_PROJECT_LIB_NAME} ${CONAN_LIBS})
