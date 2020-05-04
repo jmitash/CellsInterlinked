@@ -3,7 +3,7 @@
 
 #include <dshow.h>
 
-#include "monitor//WindowsMonitorDiscoverer.h"
+#include "monitor/WindowsMonitorDiscoverer.h"
 
 std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     // TODO: will these be useful? Maybe for finding the EDID?

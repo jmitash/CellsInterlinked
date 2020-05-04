@@ -1,7 +1,7 @@
 
 #include <date/date.h>
 
-#include "../../include/message/Event.h"
+#include "message/Event.h"
 
 std::string Event::getEventName() const {
     return std::string();

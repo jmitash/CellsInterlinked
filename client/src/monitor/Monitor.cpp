@@ -1,5 +1,5 @@
 
-#include "../../include/monitor/Monitor.h"
+#include "monitor/Monitor.h"
 
 std::string Monitor::getName() const {
     return mName;

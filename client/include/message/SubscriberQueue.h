@@ -8,11 +8,11 @@
 #include <mutex>
 #include <thread>
 #include <stdexcept>
+#include <utility>
 
 #include "Subscriber.h"
 #include "Event.h"
 #include "PollableQueue.h"
-
 
 /**
  * A combination of a subscriber and its queue of events. Used to maintain the queue for each subscriber and handle the additions and removals to and from the queue. Note that events have priority which can determine their place within the queue. SubscriberQueue is thread safe and uses a mutex to make modification to the queue.
@@ -23,7 +23,7 @@ public:
      * Creates a new subscriber queue with the given subscriber.
      * @param subscriber the subscriber this will maintain
      */
-    SubscriberQueue(const std::shared_ptr<Subscriber> &subscriber) : mSubscriber(subscriber) {}
+    explicit SubscriberQueue(std::shared_ptr<Subscriber> subscriber) : mSubscriber(std::move(subscriber)) {}
 
     /**
      * Copy constructor that throws an exception. Intended to allow this to work in vectors.
@@ -49,7 +49,7 @@ public:
      * @param event the event to test support of
      * @return true if this supports the event and it can be added to the queue, false otherwise
      */
-    bool supportsEvent(const std::shared_ptr<Event> &event) const {
+    [[nodiscard]] bool supportsEvent(const std::shared_ptr<Event> &event) const {
         return mSubscriber->supports(event);
     }
 
@@ -63,30 +63,11 @@ public:
         mQueue.push(event);
     }
 
-    std::shared_ptr<Event> popEvent(bool block) override {
-        std::unique_lock<std::mutex> queueGuard(mQueueMutex);
-
-        if (mQueue.empty() && !block) {
-            return std::shared_ptr<Event>(nullptr);
-        } else if (mQueue.empty() && block) {
-            while (mQueue.empty()) {
-                // release lock while we yield
-                queueGuard.unlock();
-                std::this_thread::yield();
-
-                // done yielding, acquire lock while test the queue size and potentially get an event
-                queueGuard.lock();
-            }
-        }
-
-        std::shared_ptr<Event> event = mQueue.top();
-        mQueue.pop();
-        return event;
-    }
+    std::shared_ptr<Event> popEvent(bool block, std::chrono::milliseconds timeout) override;
 
 private:
     struct PriorityPointerComparator {
-        bool operator()(std::shared_ptr<Event> leftHand, std::shared_ptr<Event> rightHand) {
+        bool operator()(const std::shared_ptr<Event> &leftHand, const std::shared_ptr<Event> &rightHand) {
             return leftHand->getPriority() < rightHand->getPriority();
         }
     };

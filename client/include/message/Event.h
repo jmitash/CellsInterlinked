@@ -42,9 +42,9 @@ public:
     [[nodiscard]] virtual std::string toString();
 
 protected:
-    std::map<std::string, std::string> getFieldMap() const;
+    [[nodiscard]] std::map<std::string, std::string> getFieldMap() const;
 
-    std::vector<std::string> getFieldMapStrings() const;
+    [[nodiscard]] std::vector<std::string> getFieldMapStrings() const;
 
 private:
     const std::string mEventName;
