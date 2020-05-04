@@ -6,13 +6,12 @@
 #include "TestEvent.h"
 #include "logging/LogHelper.h"
 
-class TestSubscriber : public Subscriber<TestEvent> {
+class TestSubscriber : public Subscriber {
 public:
     TestSubscriber() : Subscriber("TestSubscriber") {}
 
-    std::string getName() override;
-
-    bool supports(std::shared_ptr<TestEvent> event) override;
+protected:
+    std::shared_ptr<Event> castEvent(const std::shared_ptr<Event> &event) override;
 
 private:
     spdlog::logger logger = LogHelper::logger(__FILE__);

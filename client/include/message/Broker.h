@@ -11,7 +11,6 @@
  */
 class Broker {
 public:
-
     /**
      * Gets the singleton Broker instance.
      * @return the singleton broker instance
@@ -22,7 +21,7 @@ public:
      * Registers a subscriber with the broker, producing a SubscriberQueue that will be able to receive events. The registerer is ultimately responsible from pulling events from the queue.
      * @param subscriber the subscriber to set up an event queue for
      */
-    [[nodiscard]] std::shared_ptr<PollableQueue<Event>> enroll(const std::shared_ptr<Subscriber<Event>> &subscriber);
+    [[nodiscard]] std::shared_ptr<PollableQueue> enroll(const std::shared_ptr<Subscriber> &subscriber);
 
     /**
      * Publish an event. The correct queue for the event will be determined, and then the event will be added to that queue.
@@ -34,7 +33,7 @@ public:
 private:
     Broker() = default;
 
-    std::vector<std::shared_ptr<SubscriberQueue<Event>>> mSubscriberQueues;
+    std::vector<std::shared_ptr<SubscriberQueue>> mSubscriberQueues;
 
 };
 

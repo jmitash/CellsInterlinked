@@ -6,14 +6,14 @@ Broker *Broker::get() {
     return &broker;
 }
 
-std::shared_ptr<PollableQueue<Event>> Broker::enroll(const std::shared_ptr<Subscriber<Event>> &subscriber) {
-    auto subscriberQueue = std::make_shared<SubscriberQueue<Event>>(subscriber);
+std::shared_ptr<PollableQueue> Broker::enroll(const std::shared_ptr<Subscriber> &subscriber) {
+    auto subscriberQueue = std::make_shared<SubscriberQueue>(subscriber);
     mSubscriberQueues.push_back(subscriberQueue);
     return subscriberQueue;
 }
 
 void Broker::publish(const std::shared_ptr<Event> &event) {
-    auto supportsEvent = [&](const std::shared_ptr<SubscriberQueue<Event>> &subscriberQueue) {
+    auto supportsEvent = [&](const std::shared_ptr<SubscriberQueue> &subscriberQueue) {
         return subscriberQueue->supportsEvent(event);
     };
 

@@ -16,22 +16,20 @@
 
 /**
  * A combination of a subscriber and its queue of events. Used to maintain the queue for each subscriber and handle the additions and removals to and from the queue. Note that events have priority which can determine their place within the queue. SubscriberQueue is thread safe and uses a mutex to make modification to the queue.
- * @tparam E the event type this manages
  */
-template<typename E>
-class SubscriberQueue : public PollableQueue<E> {
+class SubscriberQueue : public PollableQueue {
 public:
     /**
      * Creates a new subscriber queue with the given subscriber.
      * @param subscriber the subscriber this will maintain
      */
-    SubscriberQueue(const std::shared_ptr<Subscriber<E>> &subscriber) : mSubscriber(subscriber) {}
+    SubscriberQueue(const std::shared_ptr<Subscriber> &subscriber) : mSubscriber(subscriber) {}
 
     /**
      * Copy constructor that throws an exception. Intended to allow this to work in vectors.
      * @param rhs the right hand side of the copy operation (the object to copy from)
      */
-    SubscriberQueue(const SubscriberQueue<E> &rhs) {
+    SubscriberQueue(const SubscriberQueue &rhs) {
         throw std::runtime_error("This SubscriberQueue copy constructor should never be called.");
     }
 
@@ -39,7 +37,7 @@ public:
      * Move constructor for a subscriber queue. Includes special handling for the mutex.
      * @param rhs the right hand side of the move operation (where to copy from)
      */
-    SubscriberQueue(SubscriberQueue<E> &&rhs) noexcept {
+    SubscriberQueue(SubscriberQueue &&rhs) noexcept {
         std::lock_guard<std::mutex> queueGuard(rhs.mQueueMutex);
 
         this->mQueue = std::move(rhs.mQueue);
@@ -51,7 +49,7 @@ public:
      * @param event the event to test support of
      * @return true if this supports the event and it can be added to the queue, false otherwise
      */
-    bool supportsEvent(const std::shared_ptr<E> &event) const {
+    bool supportsEvent(const std::shared_ptr<Event> &event) const {
         return mSubscriber->supports(event);
     }
 
@@ -59,17 +57,17 @@ public:
      * Adds the given event to the queue. The event should be testing using #supportsEvent(std::shared_ptr<Event>) beforehand.
      * @param event the event to add to the queue
      */
-    void addEvent(const std::shared_ptr<E> &event) {
+    void addEvent(const std::shared_ptr<Event> &event) {
         std::lock_guard<std::mutex> queueGuard(mQueueMutex);
 
         mQueue.push(event);
     }
 
-    std::shared_ptr<E> popEvent(bool block) override {
+    std::shared_ptr<Event> popEvent(bool block) override {
         std::unique_lock<std::mutex> queueGuard(mQueueMutex);
 
         if (mQueue.empty() && !block) {
-            return std::shared_ptr<E>(nullptr);
+            return std::shared_ptr<Event>(nullptr);
         } else if (mQueue.empty() && block) {
             while (mQueue.empty()) {
                 // release lock while we yield
@@ -81,20 +79,20 @@ public:
             }
         }
 
-        std::shared_ptr<E> event = mQueue.top();
+        std::shared_ptr<Event> event = mQueue.top();
         mQueue.pop();
         return event;
     }
 
 private:
     struct PriorityPointerComparator {
-        bool operator()(std::shared_ptr<E> leftHand, std::shared_ptr<E> rightHand) {
+        bool operator()(std::shared_ptr<Event> leftHand, std::shared_ptr<Event> rightHand) {
             return leftHand->getPriority() < rightHand->getPriority();
         }
     };
 
-    std::shared_ptr<Subscriber<E>> mSubscriber;
-    std::priority_queue<std::shared_ptr<E>, std::vector<std::shared_ptr<E>>, PriorityPointerComparator> mQueue;
+    std::shared_ptr<Subscriber> mSubscriber;
+    std::priority_queue<std::shared_ptr<Event>, std::vector<std::shared_ptr<Event>>, PriorityPointerComparator> mQueue;
     std::mutex mQueueMutex;
 };
 
