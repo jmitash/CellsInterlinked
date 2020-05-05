@@ -1,12 +1,13 @@
 
-#ifdef _WIN32
-
 #ifndef CELLSINTERLINKED_WINDOWSMONITORDISCOVERER_H
 #define CELLSINTERLINKED_WINDOWSMONITORDISCOVERER_H
 
-#include <windows.h>
 #include "MonitorDiscoverer.h"
 #include "logging/LogHelper.h"
+
+#ifdef _WIN32
+
+#include <windows.h>
 
 /**
  * Monitor discoverer implementation for Windows.
@@ -70,6 +71,15 @@ private:
     inline static auto logger = LogHelper::logger(__FILE__);
 };
 
+#else // not _WIN32
+
+class WindowsMonitorDiscoverer : public MonitorDiscoverer {
+public:
+    [[nodiscard]] std::vector<Monitor> discoverAll() const override { 
+        return std::vector<Monitor>();
+    }
+};
+
+#endif // _WIN32
 #endif //CELLSINTERLINKED_WINDOWSMONITORDISCOVERER_H
 
-#endif

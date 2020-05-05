@@ -40,12 +40,9 @@ local/
 # Build Directories
 cmake-build-debug/
 cmake-build-release/
-build/debug/
-build/release/
-client/build/debug/
-client/build/release/
-server/build/debug/
-server/build/release/
+build/
+client/build/
+server/build/
 
 # Other Generated Files
 client/html/

@@ -11,6 +11,8 @@
  */
 class MonitorDiscoverer {
 public:
+    virtual ~MonitorDiscoverer() {}
+
     /**
      * Discovers all the available monitors on the system.
      * @return vector of monitors found on the system
