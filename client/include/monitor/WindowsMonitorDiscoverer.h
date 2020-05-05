@@ -13,27 +13,28 @@
  */
 class WindowsMonitorDiscoverer : public MonitorDiscoverer {
 public:
-    std::vector<Monitor> discoverAll() const override;
+    [[nodiscard]] std::vector<Monitor> discoverAll() const override;
 
 private:
     /**
      * Gathers all the display adapters on the system.
      * @return a vector of display devices representing display adapters
      */
-    std::vector<DISPLAY_DEVICE> gatherDisplayDeviceAdapters() const;
+    [[nodiscard]] std::vector<DISPLAY_DEVICE> gatherDisplayDeviceAdapters() const;
 
     /**
      * Gathers all the display monitors on the system. These will be the display adapters that are tied to a monitor. The display device should contain the monitor name as the @code DISPLAY_DEVICE.DeviceString @endcode but this may often be something generic such as "Generic PnP Monitor". If there is not a monitor associated with the display adapter, the resulting monitor will have all fields zeroed except for size.
      * @param displayAdapters the display adapters to find associated monitors of
      * @return a vector of display devices representing the monitors associated with the given display adapters
      */
-    std::vector<DISPLAY_DEVICE> gatherDisplayDeviceMonitors(const std::vector<DISPLAY_DEVICE> &displayAdapters) const;
+    [[nodiscard]] std::vector<DISPLAY_DEVICE>
+    gatherDisplayDeviceMonitors(const std::vector<DISPLAY_DEVICE> &displayAdapters) const;
 
     /**
      * Gathers all handles to monitors on the system.
      * @return a vector of monitor handles on the system
      */
-    std::vector<HMONITOR> gatherMonitorHandles() const;
+    [[nodiscard]] std::vector<HMONITOR> gatherMonitorHandles() const;
 
     /**
      * A callback function that will be invoked when a monitor handle is discovered.
@@ -50,21 +51,21 @@ private:
      * @param hMonitors the monitor handles to find infos for
      * @return vector of monitor infos
      */
-    std::vector<MONITORINFOEX> gatherMonitorInfos(const std::vector<HMONITOR> &hMonitors) const;
+    [[nodiscard]] std::vector<MONITORINFOEX> gatherMonitorInfos(const std::vector<HMONITOR> &hMonitors) const;
 
     /**
      * Maps the given monitor infos into Monitors, populating as much information on the monitor as possible.
      * @param monitorInfos the monitor infos to create Monitors out of
      * @return a vector of Monitors corresponding to the given monitor infos
      */
-    std::vector<Monitor> mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
+    [[nodiscard]] std::vector<Monitor> mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
 
     /**
      * Converts a display device to a human readable string.
      * @param displayDevice the display device to convert
      * @return string form of the display device
      */
-    std::string toString(const DISPLAY_DEVICE &displayDevice) const;
+    [[nodiscard]] std::string toString(const DISPLAY_DEVICE &displayDevice) const;
 
     inline static auto logger = LogHelper::logger(__FILE__);
 };

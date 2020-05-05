@@ -3,6 +3,7 @@
 
 #include <dshow.h>
 
+#include "util/StringUtil.h"
 #include "monitor/WindowsMonitorDiscoverer.h"
 
 std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
@@ -13,6 +14,11 @@ std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     auto hMonitors = gatherMonitorHandles();
     auto monitorInfos = gatherMonitorInfos(hMonitors);
     auto monitors = mapMonitorInfosToMonitors(monitorInfos);
+
+    if (logger.should_log(spdlog::level::trace)) {
+        logger.trace("Discovered monitors: [{}]", StringUtil::join(monitors.begin(), monitors.end(), ", ",
+                                                                   [](const Monitor &monitor) { return monitor.toString(); }));
+    }
 
     return monitors;
 }
@@ -123,12 +129,19 @@ WindowsMonitorDiscoverer::mapMonitorInfosToMonitors(const std::vector<MONITORINF
 }
 
 std::string WindowsMonitorDiscoverer::toString(const DISPLAY_DEVICE &displayDevice) const {
-    return fmt::format(R"(Name="{}", String="{}", Flags="{}", ID="{}", Key="{}")",
-                       displayDevice.DeviceName,
-                       displayDevice.DeviceString,
-                       displayDevice.StateFlags,
-                       displayDevice.DeviceID,
-                       displayDevice.DeviceKey);
+    return fmt::format(
+            std::string("{{") +
+            R"("DeviceName": "{}", )" +
+            R"("DeviceString": "{}", )" +
+            R"("StateFlags": {}, )" +
+            R"("DeviceID": "{}", )" +
+            R"("DeviceKey": "{}")" +
+            "}}",
+            StringUtil::escape(displayDevice.DeviceName),
+            StringUtil::escape(displayDevice.DeviceString),
+            displayDevice.StateFlags,
+            StringUtil::escape(displayDevice.DeviceID),
+            StringUtil::escape(displayDevice.DeviceKey));
 }
 
 #endif

@@ -171,6 +171,12 @@ public:
      */
     void setMillimeterHeight(float millimeterHeight);
 
+    /**
+     * Writes the monitor as a string.
+     * The string form of the monitor.
+     */
+    [[nodiscard]] std::string toString() const;
+
 private:
     std::string mName;
     std::string mContextName;

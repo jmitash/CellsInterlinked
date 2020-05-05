@@ -1,4 +1,6 @@
 
+#include <fmt/format.h>
+#include <util/StringUtil.h>
 #include "monitor/Monitor.h"
 
 std::string Monitor::getName() const {
@@ -103,4 +105,34 @@ float Monitor::getMillimeterHeight() const {
 
 void Monitor::setMillimeterHeight(float millimeterHeight) {
     mMillimeterHeight = millimeterHeight;
+}
+
+std::string Monitor::toString() const {
+    return fmt::format(
+            std::string("{{") +
+            R"("Name": "{}", )" +
+            R"("ContextName": "{}", )" +
+            R"("Number": {}, )" +
+            R"("On": {}, )" +
+            R"("Real": {}, )" +
+            R"("Primary": {}, )" +
+            R"("PixelLeft": {}, )" +
+            R"("PixelTop": {}, )" +
+            R"("PixelWidth": {}, )" +
+            R"("PixelHeight": {}, )" +
+            R"("MillimeterWidth": {}, )" +
+            R"("MillimeterHeight": {})" +
+            "}}",
+            StringUtil::escape(getName()),
+            StringUtil::escape(getContextName()),
+            getNumber(),
+            isOn(),
+            isReal(),
+            isPrimary(),
+            getPixelLeft(),
+            getPixelTop(),
+            getPixelWidth(),
+            getPixelHeight(),
+            getMillimeterWidth(),
+            getMillimeterHeight());
 }
