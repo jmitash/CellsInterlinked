@@ -1,6 +1,6 @@
 
-#include "logging/LogHelper.h"
 #include "meta/BuildInfo.h"
+#include "application/ClientApplication.h"
 
 int main() {
     spdlog::logger logger = LogHelper::logger(__FILE__);

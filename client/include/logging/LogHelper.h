@@ -69,6 +69,9 @@ private:
     [[nodiscard]] std::string convertToForwardSlash(std::string string) const;
 
     std::vector<std::shared_ptr<spdlog::sinks::sink>> mSinks;
+
+    inline static std::mutex mutex;
+    inline static std::shared_ptr<LogHelper> instance;
 };
 
 #endif //CELLSINTERLINKED_LOGHELPER_H

@@ -6,9 +6,6 @@
 #include "logging/LogHelper.h"
 #include "meta/BuildInfo.h"
 
-static std::mutex mutex;
-static std::shared_ptr<LogHelper> instance;
-
 LogHelper::LogHelper() {
     auto stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     stdoutSink->set_level(getDefaultStdoutLogLevel());
