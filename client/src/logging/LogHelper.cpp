@@ -3,35 +3,43 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 
-#include "meta/BuildInfo.h"
 #include "logging/LogHelper.h"
+#include "meta/BuildInfo.h"
+
+static std::mutex mutex;
+static std::shared_ptr<LogHelper> instance;
 
 LogHelper::LogHelper() {
     auto stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
     stdoutSink->set_level(getDefaultStdoutLogLevel());
-    sinks.push_back(stdoutSink);
+    mSinks.push_back(stdoutSink);
 
     auto fileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/log.txt", 1048576 * 5, 3);
     fileSink->set_level(getDefaultFileLogLevel());
-    sinks.push_back(fileSink);
+    mSinks.push_back(fileSink);
 
-    for (const auto &sink : sinks) {
+    for (const auto &sink : mSinks) {
         sink->set_pattern(getDefaultPattern());
     }
+}
+
+std::shared_ptr<LogHelper> LogHelper::get() {
+    std::unique_lock<std::mutex> lock(mutex);
+
+    if (instance == nullptr) {
+        instance = std::shared_ptr<LogHelper>(new LogHelper());
+    }
+
+    return instance;
 }
 
 spdlog::logger LogHelper::logger(const std::string &file) {
     return get()->createLogger(file);
 }
 
-LogHelper *LogHelper::get() {
-    static LogHelper instance;
-    return &instance;
-}
-
 spdlog::logger LogHelper::createLogger(const std::string &file) {
     auto loggerName = getLoggerName(file);
-    auto logger = spdlog::logger(loggerName, sinks.begin(), sinks.end());
+    auto logger = spdlog::logger(loggerName, mSinks.begin(), mSinks.end());
 
     std::vector<spdlog::level::level_enum> loggerLevels;
     loggerLevels.push_back(getDefaultStdoutLogLevel());
