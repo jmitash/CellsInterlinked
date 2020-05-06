@@ -45,7 +45,7 @@ void Module::shutdown() {
     } else if (!mKeepRunning) {
         logger.warn("Attempted to shutdown module '{}', but it was already in the process of shutting down", mName);
     } else {
-        spdlog::info("Shutting down module '{}'", mName);
+        logger.info("Shutting down module '{}'", mName);
         mKeepRunning = false;
     }
 
@@ -73,13 +73,13 @@ void Module::executionLoop() {
     mThreadStartedVariable.notify_all();
     lock.unlock();
 
-    spdlog::debug("'{}' module thread started", mName);
+    logger.debug("'{}' module thread started", mName);
 
     try {
         doExecutionLoop();
     } catch (...) {
         lock.lock();
-        spdlog::error("'{}' module thread threw an error- shutting down", mName);
+        logger.error("'{}' module thread threw an error- shutting down", mName);
         mErrorState = true;
         mFailCount++;
         mKeepRunning = false;
@@ -88,7 +88,7 @@ void Module::executionLoop() {
     }
 
     lock.lock();
-    spdlog::info("'{}' module thread shutting down. Iteration count: {}", mName, iterationCount);
+    logger.info("'{}' module thread shutting down. Iteration count: {}", mName, iterationCount);
     mKeepRunning = false;
     mThreadRunning = false;
 }
@@ -100,7 +100,7 @@ void Module::doExecutionLoop() {
 
         if (stop) {
             mKeepRunning = false;
-            spdlog::debug("Received quit command from execution iteration for '{}' module thread", mName);
+            logger.debug("Received quit command from execution iteration for '{}' module thread", mName);
         }
     }
 }
