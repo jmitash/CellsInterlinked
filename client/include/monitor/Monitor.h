@@ -177,6 +177,13 @@ public:
      */
     [[nodiscard]] std::string toString() const;
 
+    /**
+     * Tells if the monitor is "less than" the other. Determined by comparing individual fields' less thans.
+     * @param rhs the monitor to compare against
+     * @return true of the monitor is less than the other
+     */
+    bool operator<(const Monitor &rhs) const;
+
 private:
     std::string mName;
     std::string mContextName;
