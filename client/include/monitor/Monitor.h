@@ -173,7 +173,7 @@ public:
 
     /**
      * Writes the monitor as a string.
-     * The string form of the monitor.
+     * @return the string form of the monitor.
      */
     [[nodiscard]] std::string toString() const;
 

@@ -45,5 +45,5 @@ client/build/
 server/build/
 
 # Other Generated Files
-client/html/
-server/html/
+client/doc/html/
+server/doc/html/
