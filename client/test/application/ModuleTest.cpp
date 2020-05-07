@@ -36,6 +36,7 @@ TEST(ModuleTest, StartExecutesIteration) {
 
     // there's a race condition here, but it's extremely unlikely to pop up
     module.start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     module.shutdown();
 
     EXPECT_EQ(module.mIterations, 1);
@@ -45,6 +46,7 @@ TEST(ModuleTest, ExceptionStopsModule) {
     auto module = ErrorModule();
 
     module.start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     module.shutdown();
 
     EXPECT_EQ(module.isRunning(), false);
@@ -56,10 +58,13 @@ TEST(ModuleTest, RestartErroredModule) {
     auto module = ErrorModule();
 
     module.start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     module.shutdown();
     module.start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     module.shutdown();
     module.start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     module.shutdown();
 
     EXPECT_EQ(module.isRunning(), false);
@@ -71,6 +76,7 @@ TEST(ModuleTest, ShutdownStopsModules) {
     auto module = IncrementModule(-1);
 
     module.start();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
     module.shutdown();
 
     EXPECT_EQ(module.isRunning(), false);
