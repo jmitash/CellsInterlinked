@@ -61,6 +61,11 @@ protected:
      */
     virtual bool executeIteration() = 0;
 
+    /**
+     * Optionally yield at the end of an iteration. This is where something like a sleep, wait or yield would occur to not have the thread running 100% of the time. Overriders should be mindful of the latency the module requires and the CPU usage tradeoff.
+     */
+    virtual void yieldIteration();
+
 private:
     /**
      * Executes ::doExecutionLoop() but captures any thrown exceptions to be able to track the thread failure.

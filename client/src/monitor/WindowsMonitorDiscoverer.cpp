@@ -6,7 +6,7 @@
 #include "util/StringUtil.h"
 #include "monitor/WindowsMonitorDiscoverer.h"
 
-std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
+std::set<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     // TODO: will these be useful? Maybe for finding the EDID?
     auto displayAdapters = gatherDisplayDeviceAdapters();
     auto displayMonitors = gatherDisplayDeviceMonitors(displayAdapters);
@@ -16,8 +16,7 @@ std::vector<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     auto monitors = mapMonitorInfosToMonitors(monitorInfos);
 
     if (logger.should_log(spdlog::level::trace)) {
-        logger.trace("Discovered monitors: [{}]", StringUtil::join(monitors.begin(), monitors.end(), ", ",
-                                                                   [](const Monitor &monitor) { return monitor.toString(); }));
+        logger.trace("Discovered monitors: {}", StringUtil::toString(monitors, Monitor::stringify));
     }
 
     return monitors;
@@ -102,9 +101,9 @@ std::vector<MONITORINFOEX> WindowsMonitorDiscoverer::gatherMonitorInfos(const st
     return monitorInfos;
 }
 
-std::vector<Monitor>
+std::set<Monitor>
 WindowsMonitorDiscoverer::mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const {
-    std::vector<Monitor> monitors;
+    std::set<Monitor> monitors;
 
     for (const MONITORINFOEX &monitorInfo : monitorInfos) {
         Monitor monitor;
@@ -122,7 +121,7 @@ WindowsMonitorDiscoverer::mapMonitorInfosToMonitors(const std::vector<MONITORINF
 
         monitor.setPrimary(monitorInfo.dwFlags & MONITORINFOF_PRIMARY);
 
-        monitors.push_back(monitor);
+        monitors.insert(monitor);
     }
 
     return monitors;

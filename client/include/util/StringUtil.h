@@ -19,19 +19,19 @@ public:
      * into "1, 2, 3".
      *
      * @tparam It an iterable type
-     * @tparam Converter a string converter for the elements of the iterable
+     * @tparam Cnvrt a string converter for the elements of the iterable
      * @param begin the start of the iterable
      * @param end the end of the iterable
-     * @param delim the separator to join adjacent elements with
      * @param converter the converter to use for converting the elements to string
+     * @param delim the separator to join adjacent elements with
      * @return a string of the joined elements
      */
-    template<typename It, typename Converter>
+    template<typename It, typename Cnvrt>
     static std::string join(
             It begin,
             It end,
-            const std::string &delim = ", ",
-            Converter converter = [](const std::string &string) { return string; }) {
+            Cnvrt converter = [](const std::string &string) { return string; },
+            const std::string &delim = ", ") {
         std::ostringstream ss;
 
         if (begin != end) {
@@ -43,6 +43,24 @@ public:
             ss << converter(*begin++);
         }
 
+        return ss.str();
+    }
+
+    /**
+     * Converts the given collection into a string form (surrounded by square brackets, comma-space separated).
+     * @tparam Collection the type of the collection to convert (must be iterable)
+     * @tparam Cnvrt the conversion function to use for converting the individual elements to a string
+     * @param collection the collection to convert
+     * @param converter the converter to use to convert the elements
+     * @return the string form of the collection
+     */
+    template<typename Collection, typename Cnvrt>
+    static std::string toString(
+            Collection collection,
+            Cnvrt converter = [](const std::string &string) { return string; }) {
+        std::ostringstream ss;
+
+        ss << "[" << join(collection.begin(), collection.end(), converter) << "]";
         return ss.str();
     }
 

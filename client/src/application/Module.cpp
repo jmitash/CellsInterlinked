@@ -102,6 +102,12 @@ void Module::doExecutionLoop() {
             mKeepRunning = false;
             logger.debug("Received quit command from execution iteration for '{}' module thread", mName);
         }
+
+        yieldIteration();
     }
+}
+
+void Module::yieldIteration() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }
 

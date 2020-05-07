@@ -14,7 +14,7 @@
  */
 class WindowsMonitorDiscoverer : public MonitorDiscoverer {
 public:
-    [[nodiscard]] std::vector<Monitor> discoverAll() const override;
+    [[nodiscard]] std::set<Monitor> discoverAll() const override;
 
 private:
     /**
@@ -59,7 +59,7 @@ private:
      * @param monitorInfos the monitor infos to create Monitors out of
      * @return a vector of Monitors corresponding to the given monitor infos
      */
-    [[nodiscard]] std::vector<Monitor> mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
+    [[nodiscard]] std::set<Monitor> mapMonitorInfosToMonitors(const std::vector<MONITORINFOEX> &monitorInfos) const;
 
     /**
      * Converts a display device to a human readable string.

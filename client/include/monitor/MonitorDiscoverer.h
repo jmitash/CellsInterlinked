@@ -2,7 +2,7 @@
 #ifndef CELLSINTERLINKED_MONITORDISCOVERER_H
 #define CELLSINTERLINKED_MONITORDISCOVERER_H
 
-#include <vector>
+#include <set>
 
 #include "Monitor.h"
 
@@ -11,13 +11,13 @@
  */
 class MonitorDiscoverer {
 public:
-    virtual ~MonitorDiscoverer() {}
+    virtual ~MonitorDiscoverer() = default;
 
     /**
      * Discovers all the available monitors on the system.
-     * @return vector of monitors found on the system
+     * @return set of monitors found on the system
      */
-    [[nodiscard]] virtual std::vector<Monitor> discoverAll() const = 0;
+    [[nodiscard]] virtual std::set<Monitor> discoverAll() const = 0;
 };
 
 #endif //CELLSINTERLINKED_MONITORDISCOVERER_H

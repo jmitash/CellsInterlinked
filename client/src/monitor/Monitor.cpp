@@ -151,3 +151,22 @@ bool Monitor::operator<(const Monitor &rhs) const {
            getMillimeterWidth() < rhs.getMillimeterWidth() ||
            getMillimeterHeight() < rhs.getMillimeterHeight();
 }
+
+bool Monitor::operator==(const Monitor &rhs) const {
+    return getName() == rhs.getName() &&
+           getContextName() == rhs.getContextName() &&
+           getNumber() == rhs.getNumber() &&
+           isOn() == rhs.isOn() &&
+           isReal() == rhs.isReal() &&
+           isPrimary() == rhs.isPrimary() &&
+           getPixelLeft() == rhs.getPixelLeft() &&
+           getPixelTop() == rhs.getPixelTop() &&
+           getPixelWidth() == rhs.getPixelWidth() &&
+           getPixelHeight() == rhs.getPixelHeight() &&
+           getMillimeterWidth() == rhs.getMillimeterWidth() &&
+           getMillimeterHeight() == rhs.getMillimeterHeight();
+}
+
+std::string Monitor::stringify(const Monitor &monitor) {
+    return monitor.toString();
+}

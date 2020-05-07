@@ -180,9 +180,23 @@ public:
     /**
      * Tells if the monitor is "less than" the other. Determined by comparing individual fields' less thans.
      * @param rhs the monitor to compare against
-     * @return true of the monitor is less than the other
+     * @return true if the monitor is less than the other
      */
     bool operator<(const Monitor &rhs) const;
+
+    /**
+     * Tells if the monitor is the same as another. Determined by comparing individual fields' values.
+     * @param rhs the monitor to compare against
+     * @return true if the monitor is the same the other
+     */
+    bool operator==(const Monitor &rhs) const;
+
+    /**
+     * Converts the given monitor into a string.
+     * @param monitor the monitor to convert to a string
+     * @return the string version of the monitor
+     */
+    [[nodiscard]] static std::string stringify(const Monitor &monitor);
 
 private:
     std::string mName;
