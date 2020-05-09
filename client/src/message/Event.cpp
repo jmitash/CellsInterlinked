@@ -4,7 +4,7 @@
 #include "message/Event.h"
 
 std::string Event::getEventName() const {
-    return std::string();
+    return mEventName;
 }
 
 int Event::getPriority() const {

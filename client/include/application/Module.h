@@ -59,7 +59,7 @@ protected:
      * Contains the logic of this module to execute on an iterative basis. This is essentially the code the thread runs in a loop while the module is running.
      * @return true to stop execution and shut down the thread, false to continue executing
      */
-    virtual bool executeIteration() = 0;
+    [[nodiscard]] virtual bool executeIteration() = 0;
 
     /**
      * Optionally yield at the end of an iteration. This is where something like a sleep, wait or yield would occur to not have the thread running 100% of the time. Overriders should be mindful of the latency the module requires and the CPU usage tradeoff.
@@ -76,6 +76,13 @@ private:
      * Executes ::executeIteration() in a loop, stopping when the method indicates that execution should stop, or the module is shutdown.
      */
     void doExecutionLoop();
+
+    /**
+     * Attempts to resolve the message from a given exception pointer.
+     * @param exceptionPtr a pointer to the exception to resolve the message of
+     * @return the message of the exception, or empty string if not resolvable
+     */
+    [[nodiscard]] std::string resolveExceptionMessage(const std::exception_ptr &exceptionPtr);
 
     const std::string mName;
     std::thread mThread;

@@ -79,7 +79,9 @@ void Module::executionLoop() {
         doExecutionLoop();
     } catch (...) {
         lock.lock();
-        logger.error("'{}' module thread threw an error- shutting down", mName);
+
+        std::string exceptionMessage = resolveExceptionMessage(std::current_exception());
+        logger.error("'{}' module thread threw an error, shutting down. \"{}\"", mName, exceptionMessage);
         mErrorState = true;
         mFailCount++;
         mKeepRunning = false;
@@ -109,5 +111,23 @@ void Module::doExecutionLoop() {
 
 void Module::yieldIteration() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
+}
+
+std::string Module::resolveExceptionMessage(const std::exception_ptr &exceptionPtr) {
+    if (!exceptionPtr) {
+        return "";
+    }
+
+    try {
+        std::rethrow_exception(exceptionPtr);
+    } catch (const std::exception &e) {
+        return e.what();
+    } catch (const std::string &e) {
+        return e;
+    } catch (const char *e) {
+        return e;
+    } catch (...) {
+        return "Unknown exception";
+    }
 }
 
