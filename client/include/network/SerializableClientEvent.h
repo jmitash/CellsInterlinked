@@ -3,6 +3,7 @@
 #define CELLSINTERLINKED_SERIALIZABLECLIENTEVENT_H
 
 #include "message/Event.h"
+#include "network/PacketEventRegistry.h"
 
 /**
  * An event that can be serialized in order to be sent over the network.

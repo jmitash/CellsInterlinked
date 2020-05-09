@@ -3,6 +3,7 @@
 #define CELLSINTERLINKED_MONITOR_H
 
 #include <string>
+#include <vector>
 
 /**
  * Representation of a monitor or display device for a machine.
@@ -190,6 +191,12 @@ public:
      * @return true if the monitor is the same the other
      */
     bool operator==(const Monitor &rhs) const;
+
+    /**
+     * Serialize this monitor into a vector of bytes.
+     * @return a vector of bytes representing this monitor
+     */
+    [[nodiscard]] std::vector<unsigned char> serialize() const;
 
     /**
      * Converts the given monitor into a string.

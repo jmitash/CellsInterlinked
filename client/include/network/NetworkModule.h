@@ -2,8 +2,10 @@
 #ifndef CELLSINTERLINKED_NETWORKMODULE_H
 #define CELLSINTERLINKED_NETWORKMODULE_H
 
+#include "logging/LogHelper.h"
 #include "application/Module.h"
 #include "message/Broker.h"
+#include "network/SerializableClientEventPacketConverter.h"
 #include "network/SerializableClientEventSubscriber.h"
 
 /**
@@ -26,6 +28,8 @@ protected:
 private:
     Broker *mBroker;
     std::shared_ptr<PollableQueue> mSerializableClientEventQueue;
+    SerializableClientEventPacketConverter packetConverter;
+    inline static spdlog::logger logger = LogHelper::logger(__FILE__);
 };
 
 

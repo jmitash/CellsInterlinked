@@ -1,6 +1,7 @@
 
 #include <fmt/format.h>
-#include <util/StringUtil.h>
+#include "util/StringUtil.h"
+#include "util/SerializationUtil.h"
 #include "monitor/Monitor.h"
 
 std::string Monitor::getName() const {
@@ -169,4 +170,21 @@ bool Monitor::operator==(const Monitor &rhs) const {
 
 std::string Monitor::stringify(const Monitor &monitor) {
     return monitor.toString();
+}
+
+std::vector<unsigned char> Monitor::serialize() const {
+    std::vector<unsigned char> buffer;
+    SerializationUtil::convert(buffer, getName());
+    SerializationUtil::convert(buffer, getContextName());
+    SerializationUtil::convert(buffer, getNumber());
+    SerializationUtil::convert(buffer, isOn());
+    SerializationUtil::convert(buffer, isReal());
+    SerializationUtil::convert(buffer, isPrimary());
+    SerializationUtil::convert(buffer, getPixelLeft());
+    SerializationUtil::convert(buffer, getPixelTop());
+    SerializationUtil::convert(buffer, getPixelWidth());
+    SerializationUtil::convert(buffer, getPixelHeight());
+    SerializationUtil::convert(buffer, getMillimeterWidth());
+    SerializationUtil::convert(buffer, getMillimeterHeight());
+    return buffer;
 }
