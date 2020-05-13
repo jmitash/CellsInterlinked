@@ -4,7 +4,6 @@
 
 #include <string>
 #include <sstream>
-#include <iomanip>
 
 /**
  * Utility methods for strings.
@@ -69,20 +68,7 @@ public:
      * @param string the string to escape
      * @return the escaped string
      */
-    static std::string escape(const std::string &string) {
-        std::ostringstream o;
-        for (char c : string) {
-            if (c == '"' || c == '\\') {
-                o << "\\" << c;
-            } else if ('\x00' <= c && c <= '\x1f') {
-                o << "\\u"
-                  << std::hex << std::setw(4) << std::setfill('0') << (int) c;
-            } else {
-                o << c;
-            }
-        }
-        return o.str();
-    }
+    static std::string escape(const std::string &string);
 };
 
 #endif //CELLSINTERLINKED_STRINGUTIL_H

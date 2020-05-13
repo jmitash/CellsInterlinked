@@ -7,46 +7,22 @@
 
 class SerializationUtil {
 public:
-    static void convert(std::vector<unsigned char> &buffer, const std::string &str) {
-        convert(buffer, (short) str.size());
-        for (const char &c : str) {
-            buffer.push_back(c);
-        }
-    }
+    static void convert(std::vector<unsigned char> &buffer, const std::string &str);
 
-    static void convert(std::vector<unsigned char> &buffer, const bool _bool) {
-        convert < bool > (buffer, _bool);
-    }
+    static void convert(std::vector<unsigned char> &buffer, bool _bool);
 
-    static void convert(std::vector<unsigned char> &buffer, const short _short) {
-        convert < short > (buffer, _short);
-    }
+    static void convert(std::vector<unsigned char> &buffer, short _short);
 
-    static void convert(std::vector<unsigned char> &buffer, const int _int) {
-        convert < int > (buffer, _int);
-    }
+    static void convert(std::vector<unsigned char> &buffer, int _int);
 
-    static void convert(std::vector<unsigned char> &buffer, const long long _longlong) {
-        convert < long long > (buffer, _longlong);
-    }
+    static void convert(std::vector<unsigned char> &buffer, long long _longlong);
 
-    static void convert(std::vector<unsigned char> &buffer, const float _float) {
-        convert < float > (buffer, _float);
-    }
+    static void convert(std::vector<unsigned char> &buffer, float _float);
 
-    static void convert(std::vector<unsigned char> &buffer, const double _double) {
-        convert < double > (buffer, _double);
-    }
+    static void convert(std::vector<unsigned char> &buffer, double _double);
 
     template<typename T>
-    static void convert(std::vector<unsigned char> &buffer, T t) {
-        auto *bytes = (unsigned char *) &t;
-        unsigned char count = sizeof(T) / sizeof(unsigned char);
-
-        for (int i = 0; i < count; i++) {
-            buffer.push_back(bytes[i]);
-        }
-    }
+    static void convert(std::vector<unsigned char> &buffer, T t);
 
     template<typename It, typename Serializer>
     static void convert(std::vector<unsigned char> &buffer, It begin, It end, Serializer serializer) {
