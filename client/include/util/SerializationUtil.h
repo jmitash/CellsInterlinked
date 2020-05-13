@@ -15,58 +15,43 @@ public:
     }
 
     static void convert(std::vector<unsigned char> &buffer, const bool _bool) {
-        buffer.push_back(_bool);
+        convert < bool > (buffer, _bool);
     }
 
     static void convert(std::vector<unsigned char> &buffer, const short _short) {
-        auto *bytes = (unsigned char *) &_short;
-        unsigned char count = sizeof(short) / sizeof(unsigned char);
-
-        for (int i = 0; i < count; i++) {
-            buffer.push_back(bytes[i]);
-        }
+        convert < short > (buffer, _short);
     }
 
     static void convert(std::vector<unsigned char> &buffer, const int _int) {
-        auto *bytes = (unsigned char *) &_int;
-        unsigned char count = sizeof(int) / sizeof(unsigned char);
-
-        for (int i = 0; i < count; i++) {
-            buffer.push_back(bytes[i]);
-        }
+        convert < int > (buffer, _int);
     }
 
     static void convert(std::vector<unsigned char> &buffer, const long long _longlong) {
-        auto *bytes = (unsigned char *) &_longlong;
-        unsigned char count = sizeof(long long) / sizeof(unsigned char);
-
-        for (int i = 0; i < count; i++) {
-            buffer.push_back(bytes[i]);
-        }
+        convert < long long > (buffer, _longlong);
     }
 
     static void convert(std::vector<unsigned char> &buffer, const float _float) {
-        auto *bytes = (unsigned char *) &_float;
-        unsigned char count = sizeof(float) / sizeof(unsigned char);
-
-        for (int i = 0; i < count; i++) {
-            buffer.push_back(bytes[i]);
-        }
+        convert < float > (buffer, _float);
     }
 
     static void convert(std::vector<unsigned char> &buffer, const double _double) {
-        auto *bytes = (unsigned char *) &_double;
-        unsigned char count = sizeof(double) / sizeof(unsigned char);
+        convert < double > (buffer, _double);
+    }
+
+    template<typename T>
+    static void convert(std::vector<unsigned char> &buffer, T t) {
+        auto *bytes = (unsigned char *) &t;
+        unsigned char count = sizeof(T) / sizeof(unsigned char);
 
         for (int i = 0; i < count; i++) {
             buffer.push_back(bytes[i]);
         }
     }
 
-    template<typename It, typename Srlzr>
-    static void convert(std::vector<unsigned char> &buffer, It begin, It end, Srlzr srlzr) {
+    template<typename It, typename Serializer>
+    static void convert(std::vector<unsigned char> &buffer, It begin, It end, Serializer serializer) {
         for (It cur = begin; cur != end; cur++) {
-            std::vector<unsigned char> serialized = srlzr(*cur);
+            std::vector<unsigned char> serialized = serializer(*cur);
             buffer.insert(buffer.end(), serialized.begin(), serialized.end());
         }
     }

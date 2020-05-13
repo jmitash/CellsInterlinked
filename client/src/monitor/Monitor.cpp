@@ -2,6 +2,7 @@
 #include <fmt/format.h>
 #include "util/StringUtil.h"
 #include "util/SerializationUtil.h"
+#include "util/DeserializationUtil.h"
 #include "monitor/Monitor.h"
 
 std::string Monitor::getName() const {
@@ -187,4 +188,21 @@ std::vector<unsigned char> Monitor::serialize() const {
     SerializationUtil::convert(buffer, getMillimeterWidth());
     SerializationUtil::convert(buffer, getMillimeterHeight());
     return buffer;
+}
+
+Monitor Monitor::deserialize(std::queue<unsigned char> &buffer) {
+    Monitor monitor;
+    monitor.setName(DeserializationUtil::_string(buffer));
+    monitor.setContextName(DeserializationUtil::_string(buffer));
+    monitor.setNumber(DeserializationUtil::_int(buffer));
+    monitor.setOn(DeserializationUtil::_bool(buffer));
+    monitor.setReal(DeserializationUtil::_bool(buffer));
+    monitor.setPrimary(DeserializationUtil::_bool(buffer));
+    monitor.setPixelLeft(DeserializationUtil::_int(buffer));
+    monitor.setPixelTop(DeserializationUtil::_int(buffer));
+    monitor.setPixelWidth(DeserializationUtil::_int(buffer));
+    monitor.setPixelHeight(DeserializationUtil::_int(buffer));
+    monitor.setMillimeterWidth(DeserializationUtil::_float(buffer));
+    monitor.setMillimeterHeight(DeserializationUtil::_float(buffer));
+    return monitor;
 }

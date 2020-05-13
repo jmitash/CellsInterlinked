@@ -3,6 +3,7 @@
 #define CELLSINTERLINKED_MONITOR_H
 
 #include <string>
+#include <queue>
 #include <vector>
 
 /**
@@ -197,6 +198,12 @@ public:
      * @return a vector of bytes representing this monitor
      */
     [[nodiscard]] std::vector<unsigned char> serialize() const;
+
+    /**
+     * Deserialize a monitor from a buffer.
+     * @return a monitor based on the data from the buffer
+     */
+    [[nodiscard]] static Monitor deserialize(std::queue<unsigned char> &buffer);
 
     /**
      * Converts the given monitor into a string.
