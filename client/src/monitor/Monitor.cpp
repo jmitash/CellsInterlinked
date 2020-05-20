@@ -137,10 +137,6 @@ bool Monitor::operator==(const Monitor &rhs) const {
            getMillimeterHeight() == rhs.getMillimeterHeight();
 }
 
-std::string Monitor::stringify(const Monitor &monitor) {
-    return monitor.toString();
-}
-
 std::vector<unsigned char> Monitor::serialize() const {
     std::vector<unsigned char> buffer;
     SerializationUtil::convert(buffer, getName());
@@ -156,8 +152,7 @@ std::vector<unsigned char> Monitor::serialize() const {
     return buffer;
 }
 
-Monitor Monitor::deserialize(std::queue<unsigned char> &buffer) {
-    Monitor monitor;
+void Monitor::deserialize(Monitor &monitor, std::queue<unsigned char> &buffer) {
     monitor.setName(DeserializationUtil::_string(buffer));
     monitor.setContextName(DeserializationUtil::_string(buffer));
     monitor.setNumber(DeserializationUtil::_int(buffer));
@@ -168,5 +163,4 @@ Monitor Monitor::deserialize(std::queue<unsigned char> &buffer) {
     monitor.setPixelHeight(DeserializationUtil::_int(buffer));
     monitor.setMillimeterWidth(DeserializationUtil::_float(buffer));
     monitor.setMillimeterHeight(DeserializationUtil::_float(buffer));
-    return monitor;
 }

@@ -7,7 +7,8 @@ bool MonitorStateManager::isDifferentState(const std::set<Monitor> &newState) co
     auto different = mCurrentState != newState;
 
     if (different && logger.should_log(spdlog::level::debug)) {
-        logger.debug("New monitor state: {}", StringUtil::toString(newState, Monitor::stringify));
+        logger.debug("New monitor state: {}",
+                     StringUtil::toString(newState, [](const Monitor &m) { return m.toString(); }));
     } else {
         logger.trace("No monitor state change detected");
     }

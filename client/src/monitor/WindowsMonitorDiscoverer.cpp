@@ -16,7 +16,8 @@ std::set<Monitor> WindowsMonitorDiscoverer::discoverAll() const {
     auto monitors = mapMonitorInfosToMonitors(monitorInfos);
 
     if (logger.should_log(spdlog::level::trace)) {
-        logger.trace("Discovered monitors: {}", StringUtil::toString(monitors, Monitor::stringify));
+        logger.trace("Discovered monitors: {}",
+                     StringUtil::toString(monitors, [](const Monitor &m) { return m.toString(); }));
     }
 
     return monitors;

@@ -141,7 +141,7 @@ public:
      * Writes the monitor as a string.
      * @return the string form of the monitor.
      */
-    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] virtual std::string toString() const;
 
     /**
      * Tells if the monitor is "less than" the other. Determined by comparing individual fields' less thans.
@@ -161,20 +161,15 @@ public:
      * Serialize this monitor into a vector of bytes.
      * @return a vector of bytes representing this monitor
      */
-    [[nodiscard]] std::vector<unsigned char> serialize() const;
+    [[nodiscard]] virtual std::vector<unsigned char> serialize() const;
 
     /**
      * Deserialize a monitor from a buffer.
+     * @param monitor the monitor to deserialize into
+     * @param buffer the buffer to deserialize data from
      * @return a monitor based on the data from the buffer
      */
-    [[nodiscard]] static Monitor deserialize(std::queue<unsigned char> &buffer);
-
-    /**
-     * Converts the given monitor into a string.
-     * @param monitor the monitor to convert to a string
-     * @return the string version of the monitor
-     */
-    [[nodiscard]] static std::string stringify(const Monitor &monitor);
+    static void deserialize(Monitor &monitor, std::queue<unsigned char> &buffer);
 
 private:
     std::string mName;

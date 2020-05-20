@@ -13,7 +13,8 @@ TEST(MonitorTest, SerializeAndDeserialize) {
         deserializeBuffer.push(i);
     }
 
-    auto deserializedMonitor = Monitor::deserialize(deserializeBuffer);
+    Monitor deserializedMonitor;
+    Monitor::deserialize(deserializedMonitor, deserializeBuffer);
     EXPECT_TRUE(monitor == deserializedMonitor);
 }
 
