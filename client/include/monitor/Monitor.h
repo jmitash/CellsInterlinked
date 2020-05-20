@@ -138,18 +138,6 @@ public:
     void setPixelTop(int pixelTop);
 
     /**
-     * Gets the right position of the monitor. This is calculated from getPixelLeft() and getPixelWidth().
-     * @return the position of the right side of the screen in pixels
-     */
-    [[nodiscard]] int getPixelRight() const;
-
-    /**
-     * Gets the bottom position of the monitor. This is calculated from getPixelTop() and getPixelHeight().
-     * @return the position of the bottom side of the screen in pixels
-     */
-    [[nodiscard]] int getPixelBottom() const;
-
-    /**
      * Gets the width in millimeters of this monitor. May not be supported for some monitors.
      * @return the width in millimeters of this monitor, or a non-positive value if not available
      */

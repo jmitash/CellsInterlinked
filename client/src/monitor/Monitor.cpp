@@ -85,14 +85,6 @@ void Monitor::setPixelTop(int pixelTop) {
     mPixelTop = pixelTop;
 }
 
-int Monitor::getPixelRight() const {
-    return getPixelLeft() + getPixelWidth();
-}
-
-int Monitor::getPixelBottom() const {
-    return getPixelTop() + getPixelHeight();
-}
-
 float Monitor::getMillimeterWidth() const {
     return mMillimeterWidth;
 }
