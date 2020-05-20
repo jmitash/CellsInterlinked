@@ -54,30 +54,6 @@ public:
     void setNumber(int number);
 
     /**
-     * Tells if the monitor is on. Defaults to true if this is not supported by the machine/OS.
-     * @return false if the monitor is detected as off, false otherwise
-     */
-    [[nodiscard]] bool isOn() const;
-
-    /**
-     * Sets whether this monitor is treated as on or not. See isOn().
-     * @param on whether to set the monitor as on or not
-     */
-    void setOn(bool on);
-
-    /**
-     * Tells whether this monitor is treated as real or not. Some display devices may be considered virtual (not represented by a physical monitor). Defaults to true if this feature is not supported by the machine/OS.
-     * @return false if this monitor is virtual, true otherwise
-     */
-    [[nodiscard]] bool isReal() const;
-
-    /**
-     * Sets whether this monitor is real or not. See isReal().
-     * @param real whether to treat this monitor as real or not
-     */
-    void setReal(bool real);
-
-    /**
      * Tells if this is the primary monitor for the machine. Most machines/OSs support the concept of a single primary monitor for the user with all other monitors as secondaries.
      * @return true if this is the primary monitor, false otherwise
      */
@@ -204,8 +180,6 @@ private:
     std::string mName;
     std::string mContextName;
     int mNumber = -1;
-    bool mOn = true;
-    bool mReal = true;
     bool mPrimary = true;
     int mPixelLeft = 0;
     int mPixelTop = 0;

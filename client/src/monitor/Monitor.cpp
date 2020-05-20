@@ -29,22 +29,6 @@ void Monitor::setNumber(int number) {
     mNumber = number;
 }
 
-bool Monitor::isOn() const {
-    return mOn;
-}
-
-void Monitor::setOn(bool on) {
-    mOn = on;
-}
-
-bool Monitor::isReal() const {
-    return mReal;
-}
-
-void Monitor::setReal(bool real) {
-    mReal = real;
-}
-
 bool Monitor::isPrimary() const {
     return mPrimary;
 }
@@ -107,8 +91,6 @@ std::string Monitor::toString() const {
             R"("Name": "{}", )" +
             R"("ContextName": "{}", )" +
             R"("Number": {}, )" +
-            R"("On": {}, )" +
-            R"("Real": {}, )" +
             R"("Primary": {}, )" +
             R"("PixelLeft": {}, )" +
             R"("PixelTop": {}, )" +
@@ -120,8 +102,6 @@ std::string Monitor::toString() const {
             StringUtil::escape(getName()),
             StringUtil::escape(getContextName()),
             getNumber(),
-            isOn(),
-            isReal(),
             isPrimary(),
             getPixelLeft(),
             getPixelTop(),
@@ -135,8 +115,6 @@ bool Monitor::operator<(const Monitor &rhs) const {
     return getName() < rhs.getName() ||
            getContextName() < rhs.getContextName() ||
            getNumber() < rhs.getNumber() ||
-           isOn() < rhs.isOn() ||
-           isReal() < rhs.isReal() ||
            isPrimary() < rhs.isPrimary() ||
            getPixelLeft() < rhs.getPixelLeft() ||
            getPixelTop() < rhs.getPixelTop() ||
@@ -150,8 +128,6 @@ bool Monitor::operator==(const Monitor &rhs) const {
     return getName() == rhs.getName() &&
            getContextName() == rhs.getContextName() &&
            getNumber() == rhs.getNumber() &&
-           isOn() == rhs.isOn() &&
-           isReal() == rhs.isReal() &&
            isPrimary() == rhs.isPrimary() &&
            getPixelLeft() == rhs.getPixelLeft() &&
            getPixelTop() == rhs.getPixelTop() &&
@@ -170,8 +146,6 @@ std::vector<unsigned char> Monitor::serialize() const {
     SerializationUtil::convert(buffer, getName());
     SerializationUtil::convert(buffer, getContextName());
     SerializationUtil::convert(buffer, getNumber());
-    SerializationUtil::convert(buffer, isOn());
-    SerializationUtil::convert(buffer, isReal());
     SerializationUtil::convert(buffer, isPrimary());
     SerializationUtil::convert(buffer, getPixelLeft());
     SerializationUtil::convert(buffer, getPixelTop());
@@ -187,8 +161,6 @@ Monitor Monitor::deserialize(std::queue<unsigned char> &buffer) {
     monitor.setName(DeserializationUtil::_string(buffer));
     monitor.setContextName(DeserializationUtil::_string(buffer));
     monitor.setNumber(DeserializationUtil::_int(buffer));
-    monitor.setOn(DeserializationUtil::_bool(buffer));
-    monitor.setReal(DeserializationUtil::_bool(buffer));
     monitor.setPrimary(DeserializationUtil::_bool(buffer));
     monitor.setPixelLeft(DeserializationUtil::_int(buffer));
     monitor.setPixelTop(DeserializationUtil::_int(buffer));

@@ -22,8 +22,6 @@ Monitor defaultMonitor() {
     monitor.setName("Name");
     monitor.setContextName("ContextName");
     monitor.setNumber((int) 0xff000000);
-    monitor.setOn(true);
-    monitor.setReal(true);
     monitor.setPrimary(true);
     monitor.setPixelLeft(0x00ff0000);
     monitor.setPixelTop(0x0000ff00);
