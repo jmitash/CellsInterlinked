@@ -49,7 +49,7 @@ spdlog::logger LogHelper::createLogger(const std::string &file) {
 }
 
 std::string LogHelper::getDefaultPattern() const {
-    return "[%Y-%m-%d %T.%e][%^%4!l%$][%t][%n] %v";
+    return "[%Y-%m-%d %T.%e][%^%4!l%$][%6t][%n] %v";
 }
 
 spdlog::level::level_enum LogHelper::getDefaultStdoutLogLevel() const {
