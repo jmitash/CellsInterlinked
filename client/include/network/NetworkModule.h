@@ -28,7 +28,6 @@ protected:
 private:
     Broker *mBroker;
     std::shared_ptr<PollableQueue> mSerializableClientEventQueue;
-    SerializableClientEventPacketConverter packetConverter;
     inline static spdlog::logger logger = LogHelper::logger(__FILE__);
 };
 

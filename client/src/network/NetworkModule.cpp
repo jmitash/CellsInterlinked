@@ -5,13 +5,8 @@ bool NetworkModule::executeIteration() {
     auto outgoingEvent = std::dynamic_pointer_cast<SerializableClientEvent>(mSerializableClientEventQueue->popEvent());
 
     if (outgoingEvent) {
-        auto packet = packetConverter.serialize(outgoingEvent);
-        logger.warn(packet.getPacketId());
-        std::string buffer = "";
-        for (const unsigned char &c : packet.getBuffer()) {
-            buffer += (char) c;
-        }
-        spdlog::warn(buffer);
+        Packet packet(outgoingEvent->getPacketId(), outgoingEvent->serialize());
+        logger.trace("Sending packet- ID: {}, Size: {}", packet.getPacketId(), packet.getBuffer().size());
     }
 
     return false;
