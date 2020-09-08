@@ -79,7 +79,12 @@ public:
      * @param serializer the serializer for which to run individual elements through to convert to a byte array
      */
     template<typename It, typename Serializer>
-    static void convert(std::vector<unsigned char> &buffer, It begin, It end, Serializer serializer);
+    static void convert(std::vector<unsigned char> &buffer, It begin, It end, Serializer serializer) {
+        for (It cur = begin; cur != end; cur++) {
+            std::vector<unsigned char> serialized = serializer(*cur);
+            buffer.insert(buffer.end(), serialized.begin(), serialized.end());
+        }
+    }
 };
 
 #endif //CELLSINTERLINKED_SERIALIZATIONUTIL_H
