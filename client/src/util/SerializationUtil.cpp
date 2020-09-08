@@ -41,3 +41,11 @@ void SerializationUtil::convert(std::vector<unsigned char> &buffer, T t) {
         buffer.push_back(bytes[i]);
     }
 }
+
+template<typename It, typename Serializer>
+void SerializationUtil::convert(std::vector<unsigned char> &buffer, It begin, It end, Serializer serializer) {
+    for (It cur = begin; cur != end; cur++) {
+        std::vector<unsigned char> serialized = serializer(*cur);
+        buffer.insert(buffer.end(), serialized.begin(), serialized.end());
+    }
+}
