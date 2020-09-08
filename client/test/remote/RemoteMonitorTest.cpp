@@ -6,6 +6,7 @@ TEST(RemoteMonitorTest, SerializeAndDeserialize) {
     RemoteMonitor monitor;
     monitor.setName("name");
     monitor.setId("id");
+    monitor.setMachineId("machineId");
 
     auto serializeBuffer = monitor.serialize();
     std::queue<unsigned char> deserializeBuffer;
@@ -19,4 +20,5 @@ TEST(RemoteMonitorTest, SerializeAndDeserialize) {
 
     EXPECT_EQ("name", deserialized.getName());
     EXPECT_EQ("id", deserialized.getId());
+    EXPECT_EQ("machineId", deserialized.getMachineId());
 }

@@ -29,6 +29,22 @@ public:
      */
     void setId(const std::string &id);
 
+    /**
+     * Gets the ID of the machine for this monitor. This is a unique ID assigned per machine, but will be the same
+     * across the same monitors for a machine.
+     *
+     * @return the machine ID of this monitor
+     */
+    [[nodiscard]] std::string getMachineId() const;
+
+    /**
+     * Sets the machine ID for this monitor.
+     *
+     * @see RemoteMonitor::getMachineId()
+     * @param machineId the machine ID for this monitor
+     */
+    void setMachineId(const std::string &machineId);
+
     [[nodiscard]] std::string toString() const override;
 
     [[nodiscard]] std::vector<unsigned char> serialize() const override;
@@ -42,6 +58,7 @@ public:
 
 private:
     std::string mId;
+    std::string mMachineId;
 };
 
 
