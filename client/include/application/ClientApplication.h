@@ -6,6 +6,7 @@
 #include "logging/LogHelper.h"
 #include "application/Module.h"
 #include "monitor/MonitorDiscoveryModule.h"
+#include "mouse/MouseCaptureModule.h"
 #include "network/NetworkModule.h"
 
 /**
@@ -18,9 +19,11 @@ public:
      */
     ClientApplication()
             : mMonitorDiscoveryModule(&broker),
-              mNetworkModule(&broker) {
+              mNetworkModule(&broker),
+              mMouseCaptureModule(&broker) {
         mAllModules.push_back(&mNetworkModule);
         mAllModules.push_back(&mMonitorDiscoveryModule);
+        mAllModules.push_back(&mMouseCaptureModule);
     }
 
     /**
@@ -31,6 +34,7 @@ public:
 private:
     Broker broker;
     MonitorDiscoveryModule mMonitorDiscoveryModule;
+    MouseCaptureModule mMouseCaptureModule;
     NetworkModule mNetworkModule;
     std::vector<Module *> mAllModules;
     inline static auto logger = LogHelper::logger(__FILE__);
