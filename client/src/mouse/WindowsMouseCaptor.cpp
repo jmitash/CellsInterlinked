@@ -5,12 +5,14 @@
 
 #include <memory>
 #include <hidusage.h>
-
-typedef WindowsMouseCaptor::WindowsMouse WindowsMouse;
+#include "util/StringUtil.h"
 
 void WindowsMouseCaptor::run() {
     std::vector<WindowsMouse> mice = getWindowsMice();
     populateWindowsMice(mice);
+
+    logger.debug("Detected eligible mice: {}",
+                 StringUtil::toString(mice, [](const WindowsMouse &m) { return m.toString(); }));
 
     HWND hWindow = createCaptorWindow();
 
@@ -34,7 +36,7 @@ std::vector<WindowsMouse> WindowsMouseCaptor::getWindowsMice() {
     if (!GetRawInputDeviceList(nullptr, &devicesCount, ridlSize)) {
         // TODO: error
     }
-    logger.trace("Discovered {} devices", devicesCount);
+    logger.debug("Discovered {} raw input devices", devicesCount);
 
     // get the actual devices
     auto devices = std::unique_ptr<RAWINPUTDEVICELIST[]>(new RAWINPUTDEVICELIST[devicesCount]);
@@ -50,7 +52,7 @@ std::vector<WindowsMouse> WindowsMouseCaptor::getWindowsMice() {
 
         if (deviceEntry.dwType == RIM_TYPEMOUSE) {
             WindowsMouse windowsMouse;
-            windowsMouse.handle = deviceEntry.hDevice;
+            windowsMouse.setHandle(deviceEntry.hDevice);
             mice.push_back(windowsMouse);
         } else {
             logger.trace("Skipping device because it is not a mouse (device handle): {}", deviceEntry.hDevice);
@@ -66,17 +68,17 @@ void WindowsMouseCaptor::populateWindowsMouse(WindowsMouse &mouse) {
     UINT deviceNameLength = maxDeviceNameLength;
     char deviceNameRaw[maxDeviceNameLength];
 
-    deviceNameLength = GetRawInputDeviceInfo(mouse.handle, RIDI_DEVICENAME, &deviceNameRaw[0], &deviceNameLength);
+    deviceNameLength = GetRawInputDeviceInfo(mouse.getHandle(), RIDI_DEVICENAME, &deviceNameRaw[0], &deviceNameLength);
     if (deviceNameLength <= 0) {
         // TODO: error
     }
-    mouse.deviceName = std::string(deviceNameRaw);
+    mouse.setDeviceName(std::string(deviceNameRaw));
 
     // get the remaining device info
     RID_DEVICE_INFO deviceInfo;
     deviceInfo.cbSize = sizeof(RID_DEVICE_INFO);
     UINT byteCount = sizeof(RID_DEVICE_INFO);
-    byteCount = GetRawInputDeviceInfo(mouse.handle, RIDI_DEVICEINFO, &deviceInfo, &byteCount);
+    byteCount = GetRawInputDeviceInfo(mouse.getHandle(), RIDI_DEVICEINFO, &deviceInfo, &byteCount);
 
     if (byteCount <= 0) {
         // TODO: error
@@ -87,14 +89,14 @@ void WindowsMouseCaptor::populateWindowsMouse(WindowsMouse &mouse) {
     }
 
     auto mouseInfo = deviceInfo.mouse;
-    mouse.id = mouseInfo.dwId;
-    mouse.numberOfButtons = mouseInfo.dwNumberOfButtons;
-    mouse.sampleRate = mouseInfo.dwSampleRate;
-    mouse.hasHorizontalScrollWheel = mouseInfo.fHasHorizontalWheel;
+    mouse.setId(mouseInfo.dwId);
+    mouse.setNumberOfButtons(mouseInfo.dwNumberOfButtons);
+    mouse.setSampleRate(mouseInfo.dwSampleRate);
+    mouse.setHasHorizontalScrollWheel(mouseInfo.fHasHorizontalWheel);
 }
 
-void WindowsMouseCaptor::populateWindowsMice(std::vector<WindowsMouse> mice) {
-    for (WindowsMouse &mouse : mice) {
+void WindowsMouseCaptor::populateWindowsMice(std::vector<WindowsMouse> &mice) {
+    for (WindowsMouse &mouse: mice) {
         populateWindowsMouse(mouse);
     }
 }
@@ -148,6 +150,7 @@ bool WindowsMouseCaptor::shouldHandleMessage(const MSG &msg) {
         // not a raw input message
         return false;
     }
+    return true;
 }
 
 bool WindowsMouseCaptor::shouldHandleRawInput(const RAWINPUT &rawInput) {

@@ -9,6 +9,7 @@
 
 #include <windows.h>
 #include "logging/LogHelper.h"
+#include "mouse/WindowsMouse.h"
 
 /**
  * Captor for mice on Windows machines.
@@ -18,14 +19,8 @@ class WindowsMouseCaptor : public MouseCaptor {
 public:
     void run() override;
 
-    struct WindowsMouse {
-        HANDLE handle;
-        std::string deviceName;
-        DWORD id;
-        DWORD numberOfButtons;
-        DWORD sampleRate;
-        BOOL hasHorizontalScrollWheel;
-    };
+    virtual ~WindowsMouseCaptor() = default;
+
 private:
     /**
      * Gathers mice on the system. The WindowsMouse that are created have only the HANDLE populated.
@@ -43,7 +38,7 @@ private:
      * Populates detailed information on the mice.
      * @param mice the mice to populate
      */
-    void populateWindowsMice(std::vector<WindowsMouse> mice);
+    void populateWindowsMice(std::vector<WindowsMouse> &mice);
 
     /**
      * Creates a window (not shown) which is utilized to capture input messages from Windows. The window is required to receive the message events.
